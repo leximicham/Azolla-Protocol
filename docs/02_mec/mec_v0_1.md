@@ -56,7 +56,8 @@ Schema constraints are authoritative if prose and examples diverge.
 ### 4.2 Readiness Transition
 
 - Emit `event` of type `TICKET_READY` when a ticket is executable.
-- Control plane marks event as `processed` only after successful scheduling.
+- Control plane marks event as `processed` when handling reaches a terminal outcome:
+  successful scheduling, `MISSING_TICKET`, `NON_EXECUTABLE_STATUS`, or `BLOCKED`.
 
 ### 4.3 Workorder Creation
 
