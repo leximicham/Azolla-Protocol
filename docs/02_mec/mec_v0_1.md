@@ -42,6 +42,7 @@ Normative schemas:
 - `docs/02_mec/schemas/run_record.schema.json`
 - `docs/02_mec/schemas/event.schema.json`
 - `docs/02_mec/schemas/pause_state.schema.json`
+- `docs/02_mec/schemas/claim_record.schema.json`
 
 Schema constraints are authoritative if prose and examples diverge.
 
@@ -49,9 +50,19 @@ Schema constraints are authoritative if prose and examples diverge.
 
 ### 4.1 Ticket Intake
 
-- Create `ticket` in `NEW` or `TODO` status.
+- Create `ticket` in `NEW` status.
 - Validate objective clarity and acceptance criteria.
 - Attach unresolved blockers as `blocked_on` entries when required.
+
+Status intent for v0.1:
+
+- `NEW`: ticket is captured but not yet execution-ready. Objective, acceptance criteria, and blockers may still need human clarification.
+- `TODO`: ticket is explicitly approved as execution-ready for control-plane scheduling.
+
+v0.1 readiness handoff:
+
+- A human operator performs project review / requirement validation and promotes `NEW -> TODO` once the ticket is executable.
+- Autonomous diazotroph-based review is intentionally out of scope for v0.1 and can replace this manual promotion in a later version.
 
 ### 4.2 Readiness Transition
 
@@ -75,6 +86,31 @@ Schema constraints are authoritative if prose and examples diverge.
 - If gates pass: update ticket status toward `DONE` and persist commit linkage.
 - If gates fail: preserve failure reason and optional blockers.
 - In all terminal run outcomes, write `pause_state` with 1–3 prioritized actions.
+
+### 4.6 UML State Machine
+
+See `docs/02_mec/mec_state_machine.puml`.
+
+### 4.7 Polling Worker Topology
+
+v0.1 lifecycle orchestration is implemented by interval-based ACP workers with explicit ownership boundaries.
+
+Polling worker topology:
+
+- `docs/02_mec/flows/polling_workers_v0_1.pseudo.md`
+- `docs/02_mec/flows/control_plane_flow.pseudo.md`
+- `docs/02_mec/flows/diazotroph_runner_flow.pseudo.md`
+
+### 4.8 Claim/Lease Semantics
+
+v0.1 polling workers must use bounded leases with expiry + heartbeat for event/workorder ownership.
+
+- Claim records are implementation metadata stored outside lifecycle artifacts, but must validate against `claim_record.schema.json`.
+- Ownership must be acquired atomically before mutating lifecycle state.
+- Ownership loss (lease renewal failure) requires safe abort without further shared-state writes.
+- Idempotent retry is required after takeover/recovery.
+
+Normative protocol details: `docs/02_mec/flows/polling_workers_v0_1.pseudo.md`.
 
 ## 5. Determinism Requirements
 
