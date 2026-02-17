@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "pause_state",
+  "description": "The paused state written after a run with prioritized next actions.",
+  "type": "object",
+  "required": ["ticket_id", "reason", "prioritized_actions", "created_at"],
+  "properties": {
+    "ticket_id": {"type": "string"},
+    "reason": {"type": "string", "enum": ["RUN_COMPLETE", "GATE_FAILED", "BUDGET_EXHAUSTED"]},
+    "prioritized_actions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "maxItems": 3
+    },
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

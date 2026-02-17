@@ -1,0 +1,5 @@
+*.swp
+.env
+inbox/*
+.vscode/*
+AGENTS.md

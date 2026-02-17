@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "context_snapshot",
+  "description": "An immutable context snapshot used for one diazotroph run.",
+  "type": "object",
+  "required": [
+    "snapshot_id",
+    "ticket_id",
+    "repo_commit_sha",
+    "related_yield_refs",
+    "full_prompt_text",
+    "created_at"
+  ],
+  "properties": {
+    "snapshot_id": {"type": "string"},
+    "ticket_id": {"type": "string"},
+    "repo_commit_sha": {"type": "string"},
+    "related_yield_refs": {"type": "array", "items": {"type": "string"}},
+    "full_prompt_text": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

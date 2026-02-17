@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "blocker_ref",
+  "description": "A dependency blocker for a ticket.",
+  "type": "object",
+  "required": ["blocker_id", "kind", "description", "resolved"],
+  "properties": {
+    "blocker_id": {"type": "string"},
+    "kind": {
+      "type": "string",
+      "enum": ["USER_INPUT", "EXTERNAL_SYSTEM", "DEPENDENCY_CHANGE", "DESIGN_DECISION", "ENVIRONMENT_ACCESS"]
+    },
+    "description": {"type": "string"},
+    "resolved": {"type": "boolean"}
+  },
+  "additionalProperties": false
+}
