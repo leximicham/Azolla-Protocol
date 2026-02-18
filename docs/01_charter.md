@@ -66,7 +66,7 @@ The Azolla Protocol addresses these risks by:
 ### 3.5 Substrate Integrity
 
 - All historical artifacts are immutable
-- Context and yield are versioned and durable
+- Context and output are versioned and durable
 - Schema mutation is not permitted at runtime
 - State is tiered but never silently discarded
 
@@ -115,7 +115,7 @@ Failure to maintain these guardrails invalidates the prosthesis function of the 
 The Azolla Control Plane must monitor for:
 
 - Excessive re-planning cycles
-- Lack of yield progress across bounded iterations
+- Lack of output progress across bounded iterations
 - Retry storms
 - Context expansion beyond defined thresholds
 - Budget exhaustion
