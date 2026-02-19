@@ -3,10 +3,10 @@
 ## A
 
 ### azolla
-A single deployment instance running under the Azolla Protocol. An azolla owns one active objective at a time and is governed by a control plane.
+A single deployment instance running under the Azolla Protocol. An azolla comprises three named internal components — the Azolla Control Plane, the Azolla Substrate, and the Exchange Membrane — and owns one active objective at a time. Diazotrophs are external to the azolla; they operate across its trust boundary.
 
 ### Azolla Control Plane
-The governance and orchestration layer that schedules work, enforces gates, updates durable state, and applies pause semantics.
+An internal component of an azolla. The governance and orchestration layer that schedules work, enforces gates, updates durable state, and applies pause semantics.
 
 ### Azolla Protocol
 The architecture, constraints, and documentation set that defines how azollas, diazotrophs, and substrate artifacts interact.
@@ -24,7 +24,7 @@ An immutable, versioned capture of all run-critical context for a single workord
 ## D
 
 ### diazotroph
-A stateless worker process that performs bounded generation/execution work from a workorder and context snapshot.
+A stateless worker process, external to the azolla, that performs bounded generation/execution work from a workorder and context snapshot. Diazotrophs operate across the deployment's trust boundary (for example, by invoking external provider APIs) and possess no structural authority within the azolla.
 
 ## E
 
@@ -32,7 +32,7 @@ A stateless worker process that performs bounded generation/execution work from 
 A control-plane signal used to trigger deterministic workflow transitions (for example, `TICKET_READY`).
 
 ### Exchange Membrane
-The policy boundary between worker output and substrate mutation. It validates output, applies gates, and determines state transitions.
+An internal component of an azolla. The policy boundary between diazotroph output and Substrate mutation. It validates output, applies gates, and determines state transitions.
 
 ## O
 
@@ -52,7 +52,7 @@ An immutable audit artifact describing one executed workorder and gate outcome.
 ## S
 
 ### Substrate
-The durable storage layer for tickets, snapshots, bundles, run records, events, and pause states.
+An internal component of an azolla. The durable data plane comprising two logical partitions: the Context Store (tickets, context snapshots, workorders, events, pause states) and the Yield Store (output bundles, run records — the products of diazotroph execution).
 
 ## T
 
