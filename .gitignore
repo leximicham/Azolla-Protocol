@@ -2,4 +2,4 @@
 .env
 inbox/*
 .vscode/*
-AGENTS.md
+.claude/*
