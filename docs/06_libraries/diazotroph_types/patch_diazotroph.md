@@ -6,7 +6,7 @@ A stateless worker that generates candidate code patches from an objective and r
 ## Input Contract
 Receives a `context_snapshot` containing:
 - Objective title and acceptance criteria (from the `objective` artifact)
-- Repository state (`repo_commit_sha`, base branch)
+- Repository state in `metadata`: `{ "commit_sha": "<string>", "base_branch": "<string>" }`
 - Full prompt text with generation instructions
 
 ## Output Contract
@@ -17,13 +17,13 @@ Produces one `output_bundle` with:
 - `notes`: execution notes describing the generation approach and any observations
 
 ## Execution
-1. Checkout repository at `repo_commit_sha`.
-2. Create or reset work branch from base branch.
+1. Checkout repository at `metadata.commit_sha`.
+2. Create or reset work branch from `metadata.base_branch`.
 3. Build generation input from objective and snapshot.
 4. Invoke external LLM provider API with bounded budget.
 5. Attempt patch application to the work branch.
 6. Normalize git diff if patch applies successfully.
-7. Emit `output_bundle`.
+7. Emit `output_bundle` with `metadata.commit_sha` included in output metadata.
 
 ## Gate Criteria
 The Exchange Membrane evaluates:

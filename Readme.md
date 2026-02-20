@@ -90,6 +90,10 @@ A concrete example: fixing a bug in a CLI tool using a code patch azolla.
 {
   "snapshot_id": "snap-0042-1",
   "objective_id": "obj-0042",
+  "metadata": {
+    "commit_sha": "a1b2c3d",
+    "base_branch": "main"
+  },
   "related_yield_refs": [],
   "full_prompt_text": "Fix the --verbose flag in src/cli/parse.rs. The flag is accepted by the argument parser but never propagated to the logger configuration. Acceptance criteria: cli parse respects --verbose; existing tests pass; one new test covers the flag.",
   "created_at": "2025-06-01T10:05:00Z"

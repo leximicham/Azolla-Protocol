@@ -13,6 +13,11 @@
   "properties": {
     "snapshot_id": {"type": "string"},
     "objective_id": {"type": "string"},
+    "metadata": {
+      "type": "object",
+      "description": "Type-specific structured data for the diazotroph. PATCH_DIAZOTROPH expects: { 'commit_sha': '<string>', 'base_branch': '<string>' }",
+      "additionalProperties": true
+    },
     "related_yield_refs": {"type": "array", "items": {"type": "string"}},
     "full_prompt_text": {"type": "string"},
     "created_at": {"type": "string", "format": "date-time"}
