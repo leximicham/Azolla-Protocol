@@ -1,5 +1,7 @@
 # Azolla Protocol
 
+**License:** [CC-BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) — Open source for non-commercial use. Attribution required. See [LICENSE](LICENSE) file for details.
+
 ## Why this exists
 
 Long-running code projects fail in predictable ways: momentum dies after interruption, complex state becomes impossible to reconstruct, and branching decisions compound into overwhelm. These risks intensify when executive function fluctuates.
