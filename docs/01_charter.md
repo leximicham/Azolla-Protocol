@@ -38,10 +38,15 @@ The Azolla Protocol addresses these risks by:
 
 ### 3.1 Authority Separation
 
+An azolla comprises three internal components:
+ 
 - Governance resides in the Azolla Control Plane
 - Durable state resides in the Azolla Substrate
-- Execution resides in diazotrophs
 - Boundary enforcement resides in the Exchange Membrane
+ 
+Diazotrophs are external to the azolla and operate across its trust boundary:
+ 
+- Execution resides in diazotrophs
 - Diazotrophs possess no structural authority
 
 ### 3.2 Stateless Execution
@@ -171,7 +176,7 @@ Permitted language must describe structural roles, deterministic execution, and 
 
 An azolla is:
 
-- A deployment instance
+- A deployment instance comprising the Control Plane, Substrate, and Exchange Membrane
 - A configuration of infrastructure
 - A bounded execution system
 

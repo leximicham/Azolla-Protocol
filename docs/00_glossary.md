@@ -3,10 +3,10 @@
 ## A
 
 ### azolla
-A single deployment instance running under the Azolla Protocol. An azolla owns one active objective at a time and is governed by a control plane.
+A single deployment instance running under the Azolla Protocol. An azolla comprises three named internal components — the Azolla Control Plane, the Azolla Substrate, and the Exchange Membrane — and owns one active objective at a time. Diazotrophs are external to the azolla; they operate across its trust boundary.
 
 ### Azolla Control Plane
-The governance and orchestration layer that schedules work, enforces gates, updates durable state, and applies pause semantics.
+An internal component of an azolla. The governance and orchestration layer that schedules work, enforces gates, updates durable state, and applies pause semantics.
 
 ### Azolla Protocol
 The architecture, constraints, and documentation set that defines how azollas, diazotrophs, and substrate artifacts interact.
