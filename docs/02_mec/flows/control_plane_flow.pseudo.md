@@ -2,16 +2,16 @@
 
 ## Intent
 
-Describe, in plain language, how one `TICKET_READY` event becomes one evaluated run.
+Describe, in plain language, how one `TICKET_READY` event for an objective becomes one evaluated run.
 
 ## Worker Model (Polling)
 
 v0.1 assumes interval-based ACP workers, not long-lived stream consumers:
 
 - **Readiness worker** (poll interval: implementation-defined) is responsible for:
-  - scanning tickets that can advance from `NEW -> TODO` only after explicit human review,
-  - emitting `TICKET_READY` only for executable `TODO` tickets,
-  - avoiding duplicate emissions for the same ticket state transition.
+  - scanning objectives that can advance from `NEW -> TODO` only after explicit human review,
+  - emitting `TICKET_READY` only for executable `TODO` objectives,
+  - avoiding duplicate emissions for the same objective state transition.
 - **Control-plane scheduler worker** (poll interval: implementation-defined) is responsible for:
   - claiming unprocessed `TICKET_READY` events,
   - creating bounded work (`context_snapshot` + `workorder`),
@@ -23,7 +23,7 @@ Claim/lease protocol details are defined in `polling_workers_v0_1.pseudo.md` and
 
 - `NEW` means intake-complete but not execution-approved.
 - `TODO` means human-reviewed and execution-approved.
-- Only `TODO` tickets should have `TICKET_READY` emitted in v0.1.
+- Only `TODO` objectives should have `TICKET_READY` emitted in v0.1.
 
 ## Narrative Flow
 
@@ -35,9 +35,9 @@ Claim/lease protocol details are defined in `polling_workers_v0_1.pseudo.md` and
    - Attempt atomic claim acquisition for `event_id`.
    - If claim fails (another worker holds active lease), skip and continue.
 
-3. **Load and validate the ticket**
-   - Read the ticket referenced by the event.
-   - If the ticket cannot be found, mark the event as processed with reason `MISSING_TICKET`.
+3. **Load and validate the objective**
+   - Read the objective referenced by the event.
+   - If the objective cannot be found, mark the event as processed with reason `MISSING_TICKET`.
    - If the ticket is not executable (`NEW`, `DONE`, or `BLOCKED`), mark the event as processed with reason `NON_EXECUTABLE_STATUS`.
 
 4. **Check blockers before scheduling work**

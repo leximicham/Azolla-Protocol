@@ -4,7 +4,7 @@
 
 MEC v0.1 defines the smallest deterministic implementation slice of the Azolla Protocol that can:
 
-1. accept a single-objective ticket,
+1. accept a single objective,
 2. create bounded execution work,
 3. process one diazotroph run,
 4. gate and persist outputs,
@@ -16,7 +16,7 @@ This document is normative for lifecycle behavior and references JSON schemas as
 
 Included in v0.1:
 
-- Single azolla objective lifecycle via `ticket`.
+- Single azolla objective lifecycle via `objective`.
 - Work preparation via `context_snapshot` and `workorder`.
 - One runner type: `PATCH_DIAZOTROPH`.
 - Output persistence via `output_bundle` and `run_record`.
@@ -34,7 +34,7 @@ Out of scope in v0.1:
 
 Normative schemas:
 
-- `docs/02_mec/schemas/ticket.schema.json`
+- `docs/02_mec/schemas/objective.schema.json`
 - `docs/02_mec/schemas/blocker_ref.schema.json`
 - `docs/02_mec/schemas/context_snapshot.schema.json`
 - `docs/02_mec/schemas/workorder.schema.json`
@@ -48,25 +48,25 @@ Schema constraints are authoritative if prose and examples diverge.
 
 ## 4. Lifecycle
 
-### 4.1 Ticket Intake
+### 4.1 Objective Intake
 
-- Create `ticket` in `NEW` status.
+- Create `objective` in `NEW` status.
 - Validate objective clarity and acceptance criteria.
 - Attach unresolved blockers as `blocked_on` entries when required.
 
 Status intent for v0.1:
 
-- `NEW`: ticket is captured but not yet execution-ready. Objective, acceptance criteria, and blockers may still need human clarification.
-- `TODO`: ticket is explicitly approved as execution-ready for control-plane scheduling.
+- `NEW`: objective is captured but not yet execution-ready. Title, acceptance criteria, and blockers may still need human clarification.
+- `TODO`: objective is explicitly approved as execution-ready for control-plane scheduling.
 
 v0.1 readiness handoff:
 
-- A human operator performs project review / requirement validation and promotes `NEW -> TODO` once the ticket is executable.
+- A human operator performs project review / requirement validation and promotes `NEW -> TODO` once the objective is executable.
 - Autonomous diazotroph-based review is intentionally out of scope for v0.1 and can replace this manual promotion in a later version.
 
 ### 4.2 Readiness Transition
 
-- Emit `event` of type `TICKET_READY` when a ticket is executable.
+- Emit `event` of type `TICKET_READY` when an objective is executable.
 - Control plane marks event as `processed` when handling reaches a terminal outcome:
   successful scheduling, `MISSING_TICKET`, `NON_EXECUTABLE_STATUS`, or `BLOCKED`.
 
@@ -83,7 +83,7 @@ v0.1 readiness handoff:
 
 ### 4.5 Gating and Pause
 
-- If gates pass: update ticket status toward `DONE` and persist commit linkage.
+- If gates pass: update objective status toward `DONE` and persist commit linkage.
 - If gates fail: preserve failure reason and optional blockers.
 - In all terminal run outcomes, write `pause_state` with 1–3 prioritized actions.
 
@@ -114,7 +114,7 @@ Normative protocol details: `docs/02_mec/flows/polling_workers_v0_1.pseudo.md`.
 
 ## 5. Determinism Requirements
 
-- Every run must be reconstructable from `ticket` + `context_snapshot` + `workorder` + `output_bundle` + `run_record`.
+- Every run must be reconstructable from `objective` + `context_snapshot` + `workorder` + `output_bundle` + `run_record`.
 - Historical artifacts are immutable after write.
 - No hidden background progression outside declared budget windows.
 
@@ -143,8 +143,8 @@ Failure handling must be represented in durable artifacts, not implicit logs.
 
 Each work cycle must provide trace links:
 
-- `ticket.ticket_id` -> `workorder.ticket_id`
+- `objective.objective_id` -> `workorder.objective_id`
 - `workorder.context_snapshot_id` -> `context_snapshot.snapshot_id`
 - `run_record.work_order_id` -> `workorder.work_order_id`
 - `run_record.output_id` -> `output_bundle.output_id`
-- `pause_state.ticket_id` -> `ticket.ticket_id`
+- `pause_state.objective_id` -> `objective.objective_id`

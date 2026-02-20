@@ -2,23 +2,23 @@
 
 ## Intent
 
-Make worker ownership explicit for MEC v0.1 so ticket lifecycle transitions are deterministic under interval polling.
+Make worker ownership explicit for MEC v0.1 so objective lifecycle transitions are deterministic under interval polling.
 
 ## Workers
 
 1. **Readiness Worker**
-   - Input: `ticket`
+   - Input: `objective`
    - Responsibility:
      - enforce `NEW` vs `TODO` semantics,
      - require human validation before `NEW -> TODO`,
-     - emit `TICKET_READY` for executable `TODO` tickets.
+     - emit `TICKET_READY` for executable `TODO` objectives.
 
 2. **Scheduler Worker**
    - Input: unprocessed `TICKET_READY` events
    - Responsibility:
      - claim one event,
      - create `context_snapshot` + `workorder`,
-     - set ticket to `IN_PROGRESS`,
+     - set objective to `IN_PROGRESS`,
      - mark event `processed=true` with terminal reason.
 
 3. **Runner Worker**
@@ -34,7 +34,7 @@ Make worker ownership explicit for MEC v0.1 so ticket lifecycle transitions are 
    - Responsibility:
      - evaluate gates,
      - persist `run_record`,
-     - move ticket to `DONE` or `BLOCKED|TODO`,
+     - move objective to `DONE` or `BLOCKED|TODO`,
      - emit terminal `pause_state`.
 
 ## Claim/Lease Protocol (Normative v0.1 Behavior)
