@@ -17,10 +17,9 @@ This file documents language constraints for Azolla Protocol documentation and a
 ## Terminology (Preferred Forms)
 
 - `Azolla Protocol` (title case): the overall architecture and set of blueprints.
-- `azolla` (lowercase): a deployment instance comprising the Control Plane, Substrate, and Exchange Membrane. Diazotrophs are external to the azolla.
-- `Azolla Substrate` (title case): the durable data plane within an azolla, comprising Context Store and Yield Store partitions.
-- `diazotroph` (lowercase): a stateless worker process, external to the azolla, that performs bounded generation work across the deployment's trust boundary.
-- `Exchange Membrane` (title case): the internal azolla component that mediates between diazotroph output and Substrate mutation.
+- `azolla` (lowercase): a specific deployment instance running under the Azolla Protocol.
+- `diazotroph` (lowercase): a stateless worker process that performs bounded generation work for an azolla.
+- `Exchange Membrane` (title case): the control-plane boundary that mediates between diazotroph execution and azolla state.
 - `workorder`, `ticket`, `run_record`, `output_bundle`, `blocker_ref`, `pause_state`: use schema names as-is when referring to data artifacts.
 
 ## Capitalization and Synonyms
