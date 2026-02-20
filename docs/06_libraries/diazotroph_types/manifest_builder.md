@@ -1,4 +1,4 @@
-# MANIFEST_BUILDER
+# MANIFEST_BUILDER_DIAZOTROPH
 
 ## Description
 A stateless worker that produces an orientation manifest from aggregated cross-azolla state data.

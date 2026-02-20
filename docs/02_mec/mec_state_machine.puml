@@ -21,9 +21,9 @@ state "Work Scheduled\n---\nticket.status = IN_PROGRESS\nevent.processed = true\
 
 state "Execution Output Produced\n---\nticket.status = IN_PROGRESS\nworkorder.status = EXECUTED\noutput_bundle = persisted (immutable)\nrun_record = absent\npause_state = absent" as ExecutionOutputProduced
 
-state "Gate PASS Recorded\n---\nrun_record.gate_result = PASS\nrun_record.commit_sha = <sha>\nticket.status -> DONE" as GatePassRecorded
+state "Gate PASS Recorded\n---\nrun_record.gate_result = PASS\nticket.status -> DONE" as GatePassRecorded
 
-state "Gate FAIL Recorded\n---\nrun_record.gate_result = FAIL\nrun_record.commit_sha = null|string\nticket.status -> BLOCKED|TODO" as GateFailRecorded
+state "Gate FAIL Recorded\n---\nrun_record.gate_result = FAIL\nticket.status -> BLOCKED|TODO" as GateFailRecorded
 
 state "Budget Exhausted\n---\nworkorder.status = CREATED|EXECUTED\nrun_record = optional/implementation-defined\nticket.status = IN_PROGRESS|BLOCKED" as BudgetExhausted
 

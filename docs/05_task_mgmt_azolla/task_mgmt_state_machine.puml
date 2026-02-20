@@ -41,7 +41,7 @@ PausedTriageBudget --> [*]
 
 state "Manifest Requested\n---\nevent.type = MANIFEST_REQUESTED\nevent.processed = false" as ManifestRequested
 
-state "Manifest Scheduled\n---\nevent.processed = true\ncontext_snapshot = persisted\n(includes cross-azolla data)\nworkorder.status = CREATED\nworkorder.diazotroph_type = MANIFEST_BUILDER" as ManifestScheduled
+state "Manifest Scheduled\n---\nevent.processed = true\ncontext_snapshot = persisted\n(includes cross-azolla data)\nworkorder.status = CREATED\nworkorder.diazotroph_type = MANIFEST_BUILDER_DIAZOTROPH" as ManifestScheduled
 
 state "Manifest Produced\n---\nworkorder.status = EXECUTED\noutput_bundle = persisted" as ManifestProduced
 
@@ -57,7 +57,7 @@ state "Paused (Manifest Budget Exhausted)\n---\npause_state.reason = BUDGET_EXHA
 
 [*] --> ManifestRequested : operator requests orientation or periodic trigger
 ManifestRequested --> ManifestScheduled : Manifest Scheduler claims, queries azollas, creates workorder
-ManifestScheduled --> ManifestProduced : Runner executes MANIFEST_BUILDER
+ManifestScheduled --> ManifestProduced : Runner executes MANIFEST_BUILDER_DIAZOTROPH
 ManifestScheduled --> PausedManifestBudget : budget_ms exceeded
 ManifestProduced --> ManifestGatePass : gate_result = PASS
 ManifestProduced --> ManifestGateFail : gate_result = FAIL

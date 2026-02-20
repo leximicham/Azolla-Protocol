@@ -27,7 +27,6 @@ Convert pending `capture_buffer` artifacts into structured candidate objectives 
 
 5. Build context_snapshot:
    - objective_id: standing objective identifier
-   - repo_commit_sha: null or current state reference
    - full_prompt_text: triage instructions + serialized capture_buffer contents
    - related_yield_refs: []
 

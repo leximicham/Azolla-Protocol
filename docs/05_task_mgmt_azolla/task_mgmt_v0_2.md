@@ -16,7 +16,7 @@ Included in v0.2:
 
 - Capture buffer intake and lifecycle.
 - Triage processing via `TRIAGE_DIAZOTROPH`.
-- Orientation manifest generation via `MANIFEST_BUILDER`.
+- Orientation manifest generation via `MANIFEST_BUILDER_DIAZOTROPH`.
 - Review of urgency-derived deadlines with local pause_state emission.
 - Cross-azolla reads via the substrate query interface (`docs/04_taxonomy/inter_azolla_protocol.md`).
 
@@ -89,8 +89,8 @@ Schema constraints are authoritative if prose and examples diverge.
 3. Manifest Scheduler Worker claims event, issues `substrate_query` requests to registered azollas for `pause_state` artifacts.
 4. Manifest Scheduler Worker reads local capture_buffer counts and objective urgency data.
 5. Builds `context_snapshot` containing aggregated cross-azolla data.
-6. Creates `workorder` targeting `MANIFEST_BUILDER` with bounded `budget_ms` and `branch_name: null`.
-7. Runner Worker executes MANIFEST_BUILDER, which produces an `output_bundle` containing orientation manifest text.
+6. Creates `workorder` targeting `MANIFEST_BUILDER_DIAZOTROPH` with bounded `budget_ms` and `branch_name: null`.
+7. Runner Worker executes MANIFEST_BUILDER_DIAZOTROPH, which produces an `output_bundle` containing orientation manifest text.
 8. Gate Worker validates output, writes `run_record` with gate decision.
 9. Gate Worker writes `pause_state` with orientation actions from the manifest.
 
@@ -125,7 +125,7 @@ Idempotency rules from `docs/02_mec/flows/polling_workers_v0_1.pseudo.md` apply 
 Two diazotroph types, statically defined:
 
 1. **TRIAGE_DIAZOTROPH** — `docs/06_libraries/diazotroph_types/triage_diazotroph.md`
-2. **MANIFEST_BUILDER** — `docs/06_libraries/diazotroph_types/manifest_builder.md`
+2. **MANIFEST_BUILDER_DIAZOTROPH** — `docs/06_libraries/diazotroph_types/manifest_builder.md`
 
 Both are stateless. All input arrives through `context_snapshot`. Neither issues cross-azolla queries directly.
 

@@ -18,7 +18,7 @@
     "objective_id": {"type": "string"},
     "diazotroph_type": {
       "type": "string",
-      "enum": ["PATCH_DIAZOTROPH", "TRIAGE_DIAZOTROPH", "MANIFEST_BUILDER"]
+      "enum": ["PATCH_DIAZOTROPH", "TRIAGE_DIAZOTROPH", "MANIFEST_BUILDER_DIAZOTROPH"]
     },
     "context_snapshot_id": {"type": "string"},
     "branch_name": {"type": ["string", "null"]},

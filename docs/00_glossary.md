@@ -36,7 +36,7 @@ An immutable, versioned capture of all run-critical context for a single workord
 ## D
 
 ### diazotroph
-A stateless worker process that performs bounded generation/execution work from a workorder and context snapshot. v0.2 defines three diazotroph types: `PATCH_DIAZOTROPH`, `TRIAGE_DIAZOTROPH`, and `MANIFEST_BUILDER`.
+A stateless worker process that performs bounded generation/execution work from a workorder and context snapshot. v0.2 defines three diazotroph types: `PATCH_DIAZOTROPH`, `TRIAGE_DIAZOTROPH`, and `MANIFEST_BUILDER_DIAZOTROPH`.
 
 ## E
 
@@ -59,7 +59,7 @@ A read-only request issued by one azolla's control plane to another azolla's Exc
 
 ## M
 
-### MANIFEST_BUILDER
+### MANIFEST_BUILDER_DIAZOTROPH
 A stateless diazotroph type that produces orientation manifests from aggregated cross-azolla state data packaged into its context_snapshot.
 
 ### memory-support azolla

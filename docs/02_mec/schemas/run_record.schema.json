@@ -10,7 +10,6 @@
     "output_id",
     "gate_result",
     "gate_reason",
-    "commit_sha",
     "created_at"
   ],
   "properties": {
@@ -20,7 +19,7 @@
     "output_id": {"type": "string"},
     "gate_result": {"type": "string", "enum": ["PASS", "FAIL"]},
     "gate_reason": {"type": "string"},
-    "commit_sha": {"type": ["string", "null"]},
+    "commit_sha": {"type": ["string", "null"], "description": "Extracted from output_bundle.metadata for diazotrophs that produce repository state (e.g., PATCH_DIAZOTROPH). Null for other diazotroph types."},
     "created_at": {"type": "string", "format": "date-time"}
   },
   "additionalProperties": false

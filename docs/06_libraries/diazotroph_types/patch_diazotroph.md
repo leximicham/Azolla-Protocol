@@ -11,7 +11,7 @@ Receives a `context_snapshot` containing:
 
 ## Output Contract
 Produces one `output_bundle` with:
-- `metadata`: `{ "branch_name": "<string>", "pr_description_draft": "<string>" }`
+- `metadata`: `{ "branch_name": "<string>", "pr_description_draft": "<string>", "commit_sha": "<string>" }`
 - `content`: git patch text (unified diff format)
 - `title`: summary of the patch
 - `notes`: execution notes describing the generation approach and any observations

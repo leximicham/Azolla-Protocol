@@ -30,12 +30,11 @@ Produce an orientation manifest from aggregated cross-azolla state for operator 
 
 5. Build context_snapshot:
    - objective_id: standing objective identifier
-   - repo_commit_sha: null or current state reference
    - full_prompt_text: manifest format requirements + serialized aggregated data
    - related_yield_refs: []
 
 6. Create workorder:
-   - diazotroph_type: MANIFEST_BUILDER
+   - diazotroph_type: MANIFEST_BUILDER_DIAZOTROPH
    - context_snapshot_id: from step 5
    - branch_name: null
    - budget_ms: deployment-configured manifest budget
@@ -46,8 +45,8 @@ Produce an orientation manifest from aggregated cross-azolla state for operator 
 8. Release claim.
 
 9. Runner Worker claims workorder:
-   - Dispatch to MANIFEST_BUILDER.
-   - MANIFEST_BUILDER produces output_bundle:
+   - Dispatch to MANIFEST_BUILDER_DIAZOTROPH.
+   - MANIFEST_BUILDER_DIAZOTROPH produces output_bundle:
      - metadata: { queried_azolla_ids: [...] }
      - content: orientation manifest text with prioritized actions
      - title: manifest summary

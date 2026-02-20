@@ -58,7 +58,7 @@ spec:              docs/02_mec/mec_v0_1.md
 ```
 category:          MEMORY_SUPPORT
 objective_type:    STANDING
-diazotroph_types:  [TRIAGE_DIAZOTROPH, MANIFEST_BUILDER]
+diazotroph_types:  [TRIAGE_DIAZOTROPH, MANIFEST_BUILDER_DIAZOTROPH]
 workers:           [Readiness, Scheduler, Runner, Gate,
                     Capture Readiness, Manifest Scheduler, Deadline Monitor]
 cross_azolla_reads: [pause_state, objective]
