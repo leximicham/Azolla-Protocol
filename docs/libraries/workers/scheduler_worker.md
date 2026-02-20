@@ -14,4 +14,4 @@
 - All azolla types.
 
 ## Claim/Lease
-- Uses the claim/lease protocol defined in `docs/02_mec/flows/polling_workers_v0_1.pseudo.md`.
+- Uses the claim/lease protocol defined in `docs/mec/flows/polling_workers_v0_1.pseudo.md`.

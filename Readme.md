@@ -181,25 +181,25 @@ The protocol is optimized for:
 
 This repository defines specification artifacts, protocol blueprints, and component libraries. It does not yet include a production runtime implementation.
 
-- `docs/00_glossary.md` — canonical terms and concise definitions
-- `docs/01_charter.md` — protocol purpose, invariants, non-goals, and guardrails
-- `docs/02_mec/mec_v0_1.md` — MEC v0.1 scope, artifacts, lifecycle, and acceptance criteria
-- `docs/02_mec/schemas/*.schema.json` — normative artifact schemas (shared across azolla types)
-- `docs/02_mec/flows/*.pseudo.md` — v0.1 deterministic control loop and runner flow pseudocode
-- `docs/03_style/language_constraints.md` — terminology and no-anthropomorphism constraints
-- `docs/04_taxonomy/azolla_taxonomy.md` — azolla categories and type blueprints
-- `docs/04_taxonomy/inter_azolla_protocol.md` — cross-azolla query interface
-- `docs/04_taxonomy/*.schema.json` — inter-azolla query schemas
-- `docs/05_task_mgmt_azolla/task_mgmt_v0_2.md` — task management azolla blueprint (v0.2)
-- `docs/05_task_mgmt_azolla/flows/*.pseudo.md` — task management flow pseudocode
-- `docs/06_libraries/workers/*.md` — reusable polling worker definitions
-- `docs/06_libraries/diazotroph_types/*.md` — diazotroph type definitions
+- `docs/glossary.md` — canonical terms and concise definitions
+- `docs/charter.md` — protocol purpose, invariants, non-goals, and guardrails
+- `docs/mec/mec_v0_1.md` — MEC v0.1 scope, artifacts, lifecycle, and acceptance criteria
+- `docs/mec/schemas/*.schema.json` — normative artifact schemas (shared across azolla types)
+- `docs/mec/flows/*.pseudo.md` — v0.1 deterministic control loop and runner flow pseudocode
+- `docs/style/language_constraints.md` — terminology and no-anthropomorphism constraints
+- `docs/taxonomy/azolla_taxonomy.md` — azolla categories and type blueprints
+- `docs/taxonomy/inter_azolla_protocol.md` — cross-azolla query interface
+- `docs/taxonomy/*.schema.json` — inter-azolla query schemas
+- `docs/task_mgmt/task_mgmt_v0_2.md` — task management azolla blueprint (v0.2)
+- `docs/task_mgmt/flows/*.pseudo.md` — task management flow pseudocode
+- `docs/libraries/workers/*.md` — reusable polling worker definitions
+- `docs/libraries/diazotroph_types/*.md` — diazotroph type definitions
 
 ## Contributing
 
 When updating docs:
 
-1. Keep terminology aligned with `docs/00_glossary.md`.
-2. Preserve charter invariants in `docs/01_charter.md`.
-3. Keep artifacts aligned with schemas in `docs/02_mec/schemas/`.
-4. Follow language constraints in `docs/03_style/language_constraints.md`.
+1. Keep terminology aligned with `docs/glossary.md`.
+2. Preserve charter invariants in `docs/charter.md`.
+3. Keep artifacts aligned with schemas in `docs/mec/schemas/`.
+4. Follow language constraints in `docs/style/language_constraints.md`.

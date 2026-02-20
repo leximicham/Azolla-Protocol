@@ -34,15 +34,15 @@ Out of scope in v0.1:
 
 Normative schemas:
 
-- `docs/02_mec/schemas/objective.schema.json`
-- `docs/02_mec/schemas/blocker_ref.schema.json`
-- `docs/02_mec/schemas/context_snapshot.schema.json`
-- `docs/02_mec/schemas/workorder.schema.json`
-- `docs/02_mec/schemas/output_bundle.schema.json`
-- `docs/02_mec/schemas/run_record.schema.json`
-- `docs/02_mec/schemas/event.schema.json`
-- `docs/02_mec/schemas/pause_state.schema.json`
-- `docs/02_mec/schemas/claim_record.schema.json`
+- `docs/mec/schemas/objective.schema.json`
+- `docs/mec/schemas/blocker_ref.schema.json`
+- `docs/mec/schemas/context_snapshot.schema.json`
+- `docs/mec/schemas/workorder.schema.json`
+- `docs/mec/schemas/output_bundle.schema.json`
+- `docs/mec/schemas/run_record.schema.json`
+- `docs/mec/schemas/event.schema.json`
+- `docs/mec/schemas/pause_state.schema.json`
+- `docs/mec/schemas/claim_record.schema.json`
 
 Schema constraints are authoritative if prose and examples diverge.
 
@@ -89,7 +89,7 @@ v0.1 readiness handoff:
 
 ### 4.6 UML State Machine
 
-See `docs/02_mec/mec_state_machine.puml`.
+See `docs/mec/mec_state_machine.puml`.
 
 ### 4.7 Polling Worker Topology
 
@@ -97,9 +97,9 @@ v0.1 lifecycle orchestration is implemented by interval-based ACP workers with e
 
 Polling worker topology:
 
-- `docs/02_mec/flows/polling_workers_v0_1.pseudo.md`
-- `docs/02_mec/flows/control_plane_flow.pseudo.md`
-- `docs/02_mec/flows/diazotroph_runner_flow.pseudo.md`
+- `docs/mec/flows/polling_workers_v0_1.pseudo.md`
+- `docs/mec/flows/control_plane_flow.pseudo.md`
+- `docs/mec/flows/diazotroph_runner_flow.pseudo.md`
 
 ### 4.8 Claim/Lease Semantics
 
@@ -110,7 +110,7 @@ v0.1 polling workers must use bounded leases with expiry + heartbeat for event/w
 - Ownership loss (lease renewal failure) requires safe abort without further shared-state writes.
 - Idempotent retry is required after takeover/recovery.
 
-Normative protocol details: `docs/02_mec/flows/polling_workers_v0_1.pseudo.md`.
+Normative protocol details: `docs/mec/flows/polling_workers_v0_1.pseudo.md`.
 
 ## 5. Determinism Requirements
 

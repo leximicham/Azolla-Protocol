@@ -21,7 +21,7 @@ An azolla whose objective is to maintain, synthesize, or surface state informati
 - Uses `objective_type: STANDING`.
 - Diazotrophs produce synthesis artifacts (triage candidates, orientation manifests) rather than execution deliverables.
 - Does not directly advance any execution azolla's objective.
-- May read from other azollas' substrates through the inter-azolla query interface defined in `docs/04_taxonomy/inter_azolla_protocol.md`.
+- May read from other azollas' substrates through the inter-azolla query interface defined in `docs/taxonomy/inter_azolla_protocol.md`.
 
 ## 3. Shared Structural Contract
 
@@ -33,9 +33,9 @@ All azollas, regardless of category, share:
 - **Stateless diazotrophs** operating across the azolla's trust boundary (Charter Section 3.2).
 - **Immutable historical artifacts** (Charter Section 3.5).
 - **Gated execution** with explicit pause semantics (Charter Section 3.6).
-- **Common schemas** from `docs/02_mec/schemas/`.
-- **Workers** selected from `docs/06_libraries/workers/`.
-- **Diazotroph types** selected from `docs/06_libraries/diazotroph_types/`.
+- **Common schemas** from `docs/mec/schemas/`.
+- **Workers** selected from `docs/libraries/workers/`.
+- **Diazotroph types** selected from `docs/libraries/diazotroph_types/`.
 
 Each deployment instance is identified by a unique `azolla_id`.
 
@@ -50,7 +50,7 @@ category:          EXECUTION
 objective_type:    TICKET
 diazotroph_types:  [PATCH_DIAZOTROPH]
 workers:           [Readiness, Scheduler, Runner, Gate]
-spec:              docs/02_mec/mec_v0_1.md
+spec:              docs/mec/mec_v0_1.md
 ```
 
 ### TASK_MGMT_AZOLLA (v0.2)
@@ -62,7 +62,7 @@ diazotroph_types:  [TRIAGE_DIAZOTROPH, MANIFEST_BUILDER_DIAZOTROPH]
 workers:           [Readiness, Scheduler, Runner, Gate,
                     Capture Readiness, Manifest Scheduler, Deadline Monitor]
 cross_azolla_reads: [pause_state, objective]
-spec:              docs/05_task_mgmt_azolla/task_mgmt_v0_2.md
+spec:              docs/task_mgmt/task_mgmt_v0_2.md
 ```
 
 ## 5. Modularity

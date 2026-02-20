@@ -18,7 +18,7 @@ Included in v0.2:
 - Triage processing via `TRIAGE_DIAZOTROPH`.
 - Orientation manifest generation via `MANIFEST_BUILDER_DIAZOTROPH`.
 - Review of urgency-derived deadlines with local pause_state emission.
-- Cross-azolla reads via the substrate query interface (`docs/04_taxonomy/inter_azolla_protocol.md`).
+- Cross-azolla reads via the substrate query interface (`docs/taxonomy/inter_azolla_protocol.md`).
 
 Out of scope in v0.2:
 
@@ -53,7 +53,7 @@ The task management azolla uses `objective_type: STANDING` with a single persist
 
 ## 4. Artifact Contracts
 
-Shared schemas (from `docs/02_mec/schemas/`):
+Shared schemas (from `docs/mec/schemas/`):
 
 - `objective.schema.json`
 - `capture_buffer.schema.json`
@@ -109,23 +109,23 @@ Track C is control-plane logic (not a diazotroph execution) and does not count t
 
 ## 6. Worker Topology
 
-Six polling workers, using the claim/lease protocol from `docs/02_mec/flows/polling_workers_v0_1.pseudo.md`:
+Six polling workers, using the claim/lease protocol from `docs/mec/flows/polling_workers_v0_1.pseudo.md`:
 
-1. **Capture Readiness Worker** — `docs/06_libraries/workers/capture_readiness_worker.md`
-2. **Scheduler Worker** — `docs/06_libraries/workers/scheduler_worker.md`
-3. **Runner Worker** — `docs/06_libraries/workers/runner_worker.md`
-4. **Gate Worker** — `docs/06_libraries/workers/gate_worker.md`
-5. **Manifest Scheduler Worker** — `docs/06_libraries/workers/manifest_scheduler_worker.md`
-6. **Deadline Monitor Worker** — `docs/06_libraries/workers/deadline_monitor_worker.md`
+1. **Capture Readiness Worker** — `docs/libraries/workers/capture_readiness_worker.md`
+2. **Scheduler Worker** — `docs/libraries/workers/scheduler_worker.md`
+3. **Runner Worker** — `docs/libraries/workers/runner_worker.md`
+4. **Gate Worker** — `docs/libraries/workers/gate_worker.md`
+5. **Manifest Scheduler Worker** — `docs/libraries/workers/manifest_scheduler_worker.md`
+6. **Deadline Monitor Worker** — `docs/libraries/workers/deadline_monitor_worker.md`
 
-Idempotency rules from `docs/02_mec/flows/polling_workers_v0_1.pseudo.md` apply to all workers.
+Idempotency rules from `docs/mec/flows/polling_workers_v0_1.pseudo.md` apply to all workers.
 
 ## 7. Diazotroph Types
 
 Two diazotroph types, statically defined:
 
-1. **TRIAGE_DIAZOTROPH** — `docs/06_libraries/diazotroph_types/triage_diazotroph.md`
-2. **MANIFEST_BUILDER_DIAZOTROPH** — `docs/06_libraries/diazotroph_types/manifest_builder.md`
+1. **TRIAGE_DIAZOTROPH** — `docs/libraries/diazotroph_types/triage_diazotroph.md`
+2. **MANIFEST_BUILDER_DIAZOTROPH** — `docs/libraries/diazotroph_types/manifest_builder.md`
 
 Both are stateless. All input arrives through `context_snapshot`. Neither issues cross-azolla queries directly.
 
@@ -159,4 +159,4 @@ The task management azolla specification is complete when the implementation can
 
 ## 11. UML State Machine
 
-See `docs/05_task_mgmt_azolla/task_mgmt_state_machine.puml`.
+See `docs/task_mgmt/task_mgmt_state_machine.puml`.
