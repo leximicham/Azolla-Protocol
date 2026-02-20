@@ -98,8 +98,8 @@ v0.1 lifecycle orchestration is implemented by interval-based ACP workers with e
 Polling worker topology:
 
 - `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers_v0_1.pseudo.md`
-- `docs/specs/patch/flows/control_plane_flow.pseudo.md`
-- `docs/specs/patch/flows/diazotroph_runner_flow.pseudo.md`
+- `docs/specs/execution_azolla/patch_diazotroph/flows/control_plane_flow.pseudo.md`
+- `docs/specs/execution_azolla/patch_diazotroph/flows/diazotroph_runner_flow.pseudo.md`
 
 ### 4.8 Claim/Lease Semantics
 
@@ -110,7 +110,7 @@ v0.1 polling workers must use bounded leases with expiry + heartbeat for event/w
 - Ownership loss (lease renewal failure) requires safe abort without further shared-state writes.
 - Idempotent retry is required after takeover/recovery.
 
-Normative protocol details: `docs/specs/patch/flows/polling_workers_v0_1.pseudo.md`.
+Normative protocol details: `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers_v0_1.pseudo.md`.
 
 ## 5. Determinism Requirements
 
