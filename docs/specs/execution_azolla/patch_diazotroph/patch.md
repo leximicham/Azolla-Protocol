@@ -89,7 +89,7 @@ v0.1 readiness handoff:
 
 ### 4.6 UML State Machine
 
-See `docs/specs/execution_azolla/patch_diazotroph/mec_state_machine.puml`.
+See `docs/specs/execution_azolla/patch_diazotroph/patch_state_machine.puml`.
 
 ### 4.7 Polling Worker Topology
 
@@ -97,7 +97,7 @@ v0.1 lifecycle orchestration is implemented by interval-based ACP workers with e
 
 Polling worker topology:
 
-- `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers_v0_1.pseudo.md`
+- `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers.pseudo.md`
 - `docs/specs/execution_azolla/patch_diazotroph/flows/control_plane_flow.pseudo.md`
 - `docs/specs/execution_azolla/patch_diazotroph/flows/diazotroph_runner_flow.pseudo.md`
 
@@ -110,7 +110,7 @@ v0.1 polling workers must use bounded leases with expiry + heartbeat for event/w
 - Ownership loss (lease renewal failure) requires safe abort without further shared-state writes.
 - Idempotent retry is required after takeover/recovery.
 
-Normative protocol details: `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers_v0_1.pseudo.md`.
+Normative protocol details: `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers.pseudo.md`.
 
 ## 5. Determinism Requirements
 

@@ -50,7 +50,7 @@ category:          EXECUTION
 objective_type:    TICKET
 diazotroph_types:  [PATCH_DIAZOTROPH]
 workers:           [Readiness, Scheduler, Runner, Gate]
-spec:              docs/specs/execution_azolla/patch_diazotroph/mec_v0_1.md
+spec:              docs/specs/execution_azolla/patch_diazotroph/patch.md
 ```
 
 ### TASK_MGMT_AZOLLA (v0.2)
@@ -62,7 +62,7 @@ diazotroph_types:  [TRIAGE_DIAZOTROPH, MANIFEST_BUILDER_DIAZOTROPH]
 workers:           [Readiness, Scheduler, Runner, Gate,
                     Capture Readiness, Manifest Scheduler, Deadline Monitor]
 cross_azolla_reads: [pause_state, objective]
-spec:              docs/specs/memory_support_azolla/task_mgmt/task_mgmt_v0_2.md
+spec:              docs/specs/memory_support_azolla/task_mgmt/task_mgmt.md
 ```
 
 ## 5. Modularity

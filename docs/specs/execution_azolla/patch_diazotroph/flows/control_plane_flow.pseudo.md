@@ -17,7 +17,7 @@ v0.1 assumes interval-based ACP workers, not long-lived stream consumers:
   - creating bounded work (`context_snapshot` + `workorder`),
   - recording terminal processing outcomes and setting `event.processed=true`.
 
-Claim/lease protocol details are defined in `polling_workers_v0_1.pseudo.md` and are normative for this flow.
+Claim/lease protocol details are defined in `polling_workers.pseudo.md` and are normative for this flow.
 
 ## v0.1 Status Semantics
 

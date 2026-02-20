@@ -13,6 +13,6 @@
 - All azolla types.
 
 ## Claim/Lease
-- Uses the claim/lease protocol defined in `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers_v0_1.pseudo.md`.
+- Uses the claim/lease protocol defined in `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers.pseudo.md`.
 - Long-running executions must renew the lease periodically.
 - If lease renewal fails, the runner must abort without further shared-state writes.

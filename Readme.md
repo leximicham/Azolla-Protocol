@@ -187,11 +187,11 @@ This repository defines specification artifacts, protocol blueprints, and compon
   - `azolla_taxonomy.md` — azolla categories and type blueprints
   - `inter_azolla_protocol.md` — cross-azolla query interface
   - `schemas/*.schema.json` — shared artifact schemas (objective, workorder, etc.)
-- `docs/specs/execution_azolla/patch_diazotroph/` — PATCH_DIAZOTROPH v0.1 minimal executable core
-  - `mec_v0_1.md` — MEC v0.1 scope, artifacts, lifecycle, and acceptance criteria
+- `docs/specs/execution_azolla/patch_diazotroph/` — PATCH_DIAZOTROPH minimal executable core
+  - `patch.md` — patch diazotroph scope, artifacts, lifecycle, and acceptance criteria
   - `flows/*.pseudo.md` — deterministic control loop and worker topology pseudocode
-- `docs/specs/memory_support_azolla/task_mgmt/` — task management azolla v0.2 specification
-  - `task_mgmt_v0_2.md` — task management azolla blueprint
+- `docs/specs/memory_support_azolla/task_mgmt/` — task management azolla specification
+  - `task_mgmt.md` — task management azolla blueprint
   - `flows/*.pseudo.md` — task management worker topology and flow pseudocode
 - `docs/style/language_constraints.md` — terminology and no-anthropomorphism constraints
 - `docs/libraries/workers/*.md` — reusable polling worker definitions

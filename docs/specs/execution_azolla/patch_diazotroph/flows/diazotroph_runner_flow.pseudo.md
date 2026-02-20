@@ -16,7 +16,7 @@ v0.1 assumes a dedicated interval-based **runner worker**:
 
 This keeps scheduling and execution responsibilities separated, while still using simple polling.
 
-Claim/lease protocol details are defined in `polling_workers_v0_1.pseudo.md` and are normative for this flow.
+Claim/lease protocol details are defined in `polling_workers.pseudo.md` and are normative for this flow.
 
 ## Narrative Flow
 
