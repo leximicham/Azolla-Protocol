@@ -34,15 +34,15 @@ Out of scope in v0.1:
 
 Normative schemas:
 
-- `docs/specs/execution/patch/schemas/objective.schema.json`
-- `docs/specs/execution/patch/schemas/blocker_ref.schema.json`
-- `docs/specs/execution/patch/schemas/context_snapshot.schema.json`
-- `docs/specs/execution/patch/schemas/workorder.schema.json`
-- `docs/specs/execution/patch/schemas/output_bundle.schema.json`
-- `docs/specs/execution/patch/schemas/run_record.schema.json`
-- `docs/specs/execution/patch/schemas/event.schema.json`
-- `docs/specs/execution/patch/schemas/pause_state.schema.json`
-- `docs/specs/execution/patch/schemas/claim_record.schema.json`
+- `docs/specs/core_protocol/schemas/objective.schema.json`
+- `docs/specs/core_protocol/schemas/blocker_ref.schema.json`
+- `docs/specs/core_protocol/schemas/context_snapshot.schema.json`
+- `docs/specs/core_protocol/schemas/workorder.schema.json`
+- `docs/specs/core_protocol/schemas/output_bundle.schema.json`
+- `docs/specs/core_protocol/schemas/run_record.schema.json`
+- `docs/specs/core_protocol/schemas/event.schema.json`
+- `docs/specs/core_protocol/schemas/pause_state.schema.json`
+- `docs/specs/core_protocol/schemas/claim_record.schema.json`
 
 Schema constraints are authoritative if prose and examples diverge.
 
@@ -89,7 +89,7 @@ v0.1 readiness handoff:
 
 ### 4.6 UML State Machine
 
-See `docs/specs/execution/patch/mec_state_machine.puml`.
+See `docs/specs/execution_azolla/patch_diazotroph/mec_state_machine.puml`.
 
 ### 4.7 Polling Worker Topology
 
@@ -97,7 +97,7 @@ v0.1 lifecycle orchestration is implemented by interval-based ACP workers with e
 
 Polling worker topology:
 
-- `docs/specs/execution/patch/flows/polling_workers_v0_1.pseudo.md`
+- `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers_v0_1.pseudo.md`
 - `docs/specs/patch/flows/control_plane_flow.pseudo.md`
 - `docs/specs/patch/flows/diazotroph_runner_flow.pseudo.md`
 

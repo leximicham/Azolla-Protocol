@@ -39,7 +39,7 @@ Make worker ownership explicit for MEC v0.1 so objective lifecycle transitions a
 
 ## Claim/Lease Protocol (Normative v0.1 Behavior)
 
-v0.1 workers maintain claim metadata in implementation storage (for example, a lock table keyed by `event_id` or `work_order_id`) and must validate each record against `docs/specs/execution/patch/schemas/claim_record.schema.json`.
+v0.1 workers maintain claim metadata in implementation storage (for example, a lock table keyed by `event_id` or `work_order_id`) and must validate each record against `docs/specs/core_protocol/schemas/claim_record.schema.json`.
 
 ### Required claim fields
 
