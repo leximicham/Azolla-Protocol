@@ -34,15 +34,15 @@ Out of scope in v0.1:
 
 Normative schemas:
 
-- `docs/mec/schemas/objective.schema.json`
-- `docs/mec/schemas/blocker_ref.schema.json`
-- `docs/mec/schemas/context_snapshot.schema.json`
-- `docs/mec/schemas/workorder.schema.json`
-- `docs/mec/schemas/output_bundle.schema.json`
-- `docs/mec/schemas/run_record.schema.json`
-- `docs/mec/schemas/event.schema.json`
-- `docs/mec/schemas/pause_state.schema.json`
-- `docs/mec/schemas/claim_record.schema.json`
+- `docs/specs/patch/schemas/objective.schema.json`
+- `docs/specs/patch/schemas/blocker_ref.schema.json`
+- `docs/specs/patch/schemas/context_snapshot.schema.json`
+- `docs/specs/patch/schemas/workorder.schema.json`
+- `docs/specs/patch/schemas/output_bundle.schema.json`
+- `docs/specs/patch/schemas/run_record.schema.json`
+- `docs/specs/patch/schemas/event.schema.json`
+- `docs/specs/patch/schemas/pause_state.schema.json`
+- `docs/specs/patch/schemas/claim_record.schema.json`
 
 Schema constraints are authoritative if prose and examples diverge.
 
@@ -89,7 +89,7 @@ v0.1 readiness handoff:
 
 ### 4.6 UML State Machine
 
-See `docs/mec/mec_state_machine.puml`.
+See `docs/specs/patch/mec_state_machine.puml`.
 
 ### 4.7 Polling Worker Topology
 
@@ -97,9 +97,9 @@ v0.1 lifecycle orchestration is implemented by interval-based ACP workers with e
 
 Polling worker topology:
 
-- `docs/mec/flows/polling_workers_v0_1.pseudo.md`
-- `docs/mec/flows/control_plane_flow.pseudo.md`
-- `docs/mec/flows/diazotroph_runner_flow.pseudo.md`
+- `docs/specs/patch/flows/polling_workers_v0_1.pseudo.md`
+- `docs/specs/patch/flows/control_plane_flow.pseudo.md`
+- `docs/specs/patch/flows/diazotroph_runner_flow.pseudo.md`
 
 ### 4.8 Claim/Lease Semantics
 
@@ -110,7 +110,7 @@ v0.1 polling workers must use bounded leases with expiry + heartbeat for event/w
 - Ownership loss (lease renewal failure) requires safe abort without further shared-state writes.
 - Idempotent retry is required after takeover/recovery.
 
-Normative protocol details: `docs/mec/flows/polling_workers_v0_1.pseudo.md`.
+Normative protocol details: `docs/specs/patch/flows/polling_workers_v0_1.pseudo.md`.
 
 ## 5. Determinism Requirements
 

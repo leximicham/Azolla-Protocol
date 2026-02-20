@@ -183,15 +183,18 @@ This repository defines specification artifacts, protocol blueprints, and compon
 
 - `docs/glossary.md` — canonical terms and concise definitions
 - `docs/charter.md` — protocol purpose, invariants, non-goals, and guardrails
-- `docs/mec/mec_v0_1.md` — MEC v0.1 scope, artifacts, lifecycle, and acceptance criteria
-- `docs/mec/schemas/*.schema.json` — normative artifact schemas (shared across azolla types)
-- `docs/mec/flows/*.pseudo.md` — v0.1 deterministic control loop and runner flow pseudocode
+- `docs/specs/core/` — core concepts and inter-azolla protocol
+  - `azolla_taxonomy.md` — azolla categories and type blueprints
+  - `inter_azolla_protocol.md` — cross-azolla query interface
+  - `*.schema.json` — inter-azolla query schemas
+- `docs/specs/patch/` — PATCH_DIAZOTROPH v0.1 minimal executable core
+  - `mec_v0_1.md` — MEC v0.1 scope, artifacts, lifecycle, and acceptance criteria
+  - `schemas/*.schema.json` — normative artifact schemas
+  - `flows/*.pseudo.md` — deterministic control loop and runner flow pseudocode
+- `docs/specs/task_mgmt/` — task management azolla v0.2 specification
+  - `task_mgmt_v0_2.md` — task management azolla blueprint
+  - `flows/*.pseudo.md` — task management flow pseudocode
 - `docs/style/language_constraints.md` — terminology and no-anthropomorphism constraints
-- `docs/taxonomy/azolla_taxonomy.md` — azolla categories and type blueprints
-- `docs/taxonomy/inter_azolla_protocol.md` — cross-azolla query interface
-- `docs/taxonomy/*.schema.json` — inter-azolla query schemas
-- `docs/task_mgmt/task_mgmt_v0_2.md` — task management azolla blueprint (v0.2)
-- `docs/task_mgmt/flows/*.pseudo.md` — task management flow pseudocode
 - `docs/libraries/workers/*.md` — reusable polling worker definitions
 - `docs/libraries/diazotroph_types/*.md` — diazotroph type definitions
 
@@ -201,5 +204,5 @@ When updating docs:
 
 1. Keep terminology aligned with `docs/glossary.md`.
 2. Preserve charter invariants in `docs/charter.md`.
-3. Keep artifacts aligned with schemas in `docs/mec/schemas/`.
+3. Keep artifacts aligned with schemas in `docs/specs/patch/schemas/`.
 4. Follow language constraints in `docs/style/language_constraints.md`.
