@@ -50,12 +50,12 @@ Each deployment (an **azolla**) owns one objective at a time and comprises three
 
 ## Azolla types
 
-The protocol defines two categories of azolla (see `docs/04_taxonomy/azolla_taxonomy.md`):
+The protocol defines two categories of azolla (see `docs/specs/core_protocol/azolla_taxonomy.md`):
 
 - **Execution azollas** produce concrete deliverables (e.g., code patches). They use `objective_type: TICKET`.
 - **Memory-support azollas** maintain and surface state for the operator (e.g., orientation manifests, triage candidates). They use `objective_type: STANDING`.
 
-Multiple azollas can operate concurrently. Each owns its own Substrate. Cross-azolla reads go through the target azolla's Exchange Membrane via a typed query interface (see `docs/04_taxonomy/inter_azolla_protocol.md`).
+Multiple azollas can operate concurrently. Each owns its own Substrate. Cross-azolla reads go through the target azolla's Exchange Membrane via a typed query interface (see `docs/specs/core_protocol/inter_azolla_protocol.md`).
 
 ## One execution cycle
 
@@ -183,15 +183,15 @@ This repository defines specification artifacts, protocol blueprints, and compon
 
 - `docs/glossary.md` — canonical terms and concise definitions
 - `docs/charter.md` — protocol purpose, invariants, non-goals, and guardrails
-- `docs/specs/core/` — core concepts and inter-azolla protocol
+- `docs/specs/core_protocol/` — core concepts and inter-azolla protocol
   - `azolla_taxonomy.md` — azolla categories and type blueprints
   - `inter_azolla_protocol.md` — cross-azolla query interface
   - `*.schema.json` — inter-azolla query schemas
-- `docs/specs/patch/` — PATCH_DIAZOTROPH v0.1 minimal executable core
+- `docs/specs/execution/patch/` — PATCH_DIAZOTROPH v0.1 minimal executable core
   - `mec_v0_1.md` — MEC v0.1 scope, artifacts, lifecycle, and acceptance criteria
   - `schemas/*.schema.json` — normative artifact schemas
   - `flows/*.pseudo.md` — deterministic control loop and runner flow pseudocode
-- `docs/specs/task_mgmt/` — task management azolla v0.2 specification
+- `docs/specs/memory_support/task_mgmt/` — task management azolla v0.2 specification
   - `task_mgmt_v0_2.md` — task management azolla blueprint
   - `flows/*.pseudo.md` — task management flow pseudocode
 - `docs/style/language_constraints.md` — terminology and no-anthropomorphism constraints
@@ -204,5 +204,5 @@ When updating docs:
 
 1. Keep terminology aligned with `docs/glossary.md`.
 2. Preserve charter invariants in `docs/charter.md`.
-3. Keep artifacts aligned with schemas in `docs/specs/patch/schemas/`.
+3. Keep artifacts aligned with schemas in `docs/specs/execution/patch/schemas/`.
 4. Follow language constraints in `docs/style/language_constraints.md`.
