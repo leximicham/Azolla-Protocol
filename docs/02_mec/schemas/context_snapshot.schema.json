@@ -5,7 +5,7 @@
   "type": "object",
   "required": [
     "snapshot_id",
-    "ticket_id",
+    "objective_id",
     "repo_commit_sha",
     "related_yield_refs",
     "full_prompt_text",
@@ -13,7 +13,7 @@
   ],
   "properties": {
     "snapshot_id": {"type": "string"},
-    "ticket_id": {"type": "string"},
+    "objective_id": {"type": "string"},
     "repo_commit_sha": {"type": "string"},
     "related_yield_refs": {"type": "array", "items": {"type": "string"}},
     "full_prompt_text": {"type": "string"},

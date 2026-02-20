@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "substrate_query",
+  "description": "A read-only query issued by one azolla control plane to another azolla Exchange Membrane.",
+  "type": "object",
+  "required": [
+    "query_id",
+    "source_azolla_id",
+    "target_azolla_id",
+    "artifact_type",
+    "filter",
+    "created_at"
+  ],
+  "properties": {
+    "query_id": {"type": "string"},
+    "source_azolla_id": {"type": "string"},
+    "target_azolla_id": {"type": "string"},
+    "artifact_type": {
+      "type": "string",
+      "enum": ["pause_state", "objective", "blocker_ref"]
+    },
+    "filter": {
+      "type": "object",
+      "description": "Type-specific filter criteria. Permitted filter keys are documented per artifact_type in inter_azolla_protocol.md.",
+      "additionalProperties": true
+    },
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

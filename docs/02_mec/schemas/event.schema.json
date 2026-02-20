@@ -1,13 +1,20 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "event",
-  "description": "An event emitted by the control plane.",
+  "description": "A control-plane signal used to trigger deterministic workflow transitions.",
   "type": "object",
-  "required": ["event_id", "type", "ticket_id", "created_at", "processed"],
+  "required": ["event_id", "type", "resource_id", "azolla_id", "created_at", "processed"],
   "properties": {
     "event_id": {"type": "string"},
-    "type": {"type": "string", "enum": ["TICKET_READY"]},
-    "ticket_id": {"type": "string"},
+    "type": {
+      "type": "string",
+      "enum": ["TICKET_READY", "CAPTURE_READY", "MANIFEST_REQUESTED"]
+    },
+    "resource_id": {
+      "type": "string",
+      "description": "Primary artifact identifier for this event. For TICKET_READY: objective_id. For CAPTURE_READY: capture_id. For MANIFEST_REQUESTED: azolla_id."
+    },
+    "azolla_id": {"type": "string"},
     "created_at": {"type": "string", "format": "date-time"},
     "processed": {"type": "boolean"}
   },

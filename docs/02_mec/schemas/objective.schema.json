@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "objective",
+  "description": "The protocol's core unit: a single bounded goal owned by one azolla.",
+  "type": "object",
+  "required": [
+    "objective_id",
+    "azolla_id",
+    "title",
+    "acceptance_criteria",
+    "objective_type",
+    "status",
+    "importance",
+    "urgency",
+    "blocked_reason",
+    "blocked_on",
+    "metadata",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "objective_id": {"type": "string"},
+    "azolla_id": {"type": "string"},
+    "title": {"type": "string"},
+    "acceptance_criteria": {"type": "string"},
+    "objective_type": {
+      "type": "string",
+      "enum": ["TICKET", "STANDING"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["NEW", "TODO", "IN_PROGRESS", "BLOCKED", "DONE"]
+    },
+    "importance": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+    },
+    "urgency": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+    },
+    "blocked_reason": {"type": ["string", "null"]},
+    "blocked_on": {
+      "type": "array",
+      "items": {"$ref": "./blocker_ref.schema.json"}
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Type-specific structured data. For TICKET: repo_ref, base_branch, etc. For STANDING: scope_description, etc. Per-type validation is the responsibility of the azolla control plane.",
+      "additionalProperties": true
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

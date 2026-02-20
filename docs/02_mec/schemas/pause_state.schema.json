@@ -3,9 +3,10 @@
   "title": "pause_state",
   "description": "The paused state written after a run with prioritized next actions.",
   "type": "object",
-  "required": ["ticket_id", "reason", "prioritized_actions", "created_at"],
+  "required": ["objective_id", "azolla_id", "reason", "prioritized_actions", "created_at"],
   "properties": {
-    "ticket_id": {"type": "string"},
+    "objective_id": {"type": "string"},
+    "azolla_id": {"type": "string"},
     "reason": {"type": "string", "enum": ["RUN_COMPLETE", "GATE_FAILED", "BUDGET_EXHAUSTED"]},
     "prioritized_actions": {
       "type": "array",

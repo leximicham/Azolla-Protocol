@@ -1,24 +1,37 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "output_bundle",
-  "description": "An immutable output artifact bundle from one diazotroph run.",
+  "description": "An immutable output artifact from one diazotroph execution.",
   "type": "object",
   "required": [
     "output_id",
-    "ticket_id",
-    "branch_name",
-    "git_patch",
+    "objective_id",
+    "title",
+    "metadata",
+    "content",
     "notes",
-    "pr_description_draft",
     "created_at"
   ],
   "properties": {
     "output_id": {"type": "string"},
-    "ticket_id": {"type": "string"},
-    "branch_name": {"type": "string"},
-    "git_patch": {"type": "string"},
-    "notes": {"type": "string"},
-    "pr_description_draft": {"type": "string"},
+    "objective_id": {"type": "string"},
+    "title": {
+      "type": "string",
+      "description": "Human-readable summary of the output."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Type-specific structured data. Each diazotroph type documents its expected metadata keys. Per-type validation is the responsibility of the Exchange Membrane gate logic.",
+      "additionalProperties": true
+    },
+    "content": {
+      "type": "string",
+      "description": "Primary output payload (e.g., git patch text, orientation manifest, triage candidate description)."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Execution notes from the diazotroph run."
+    },
     "created_at": {"type": "string", "format": "date-time"}
   },
   "additionalProperties": false

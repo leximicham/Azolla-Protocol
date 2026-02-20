@@ -6,7 +6,7 @@
 
 Long-running code projects fail in predictable ways: momentum dies after interruption, complex state becomes impossible to reconstruct, and branching decisions compound into overwhelm. These risks intensify when executive function fluctuates.
 
-The Azolla Protocol is a cognitive prosthesis — an externalized executive function system that converts structured intent into sustained execution under constraint. It orchestrates stateless LLM workers through a durable, deterministic control plane that preserves progress across any interruption.
+The Azolla Protocol is a cognitive prosthesis — an externalized executive function system that converts structured intent into sustained execution under constraint. It is a blueprint library for constructing azolla deployments: each deployment is composed from shared schemas, reusable workers, and statically-defined diazotroph types, orchestrated through a durable, deterministic control plane that preserves progress across any interruption.
 
 ## How it works
 
@@ -44,26 +44,40 @@ Each deployment (an **azolla**) owns one objective at a time and comprises three
 ```
 
 - The **Control Plane** governs scheduling, enforces gates, and applies pause semantics.
-- The **Substrate** is the durable data plane: a Context Store (tickets, snapshots, workorders) and a Yield Store (output bundles, run records).
-- The **Exchange Membrane** validates diazotroph output before it can mutate Substrate state.
+- The **Substrate** is the durable data plane: a Context Store (objectives, snapshots, workorders) and a Yield Store (output bundles, run records).
+- The **Exchange Membrane** validates diazotroph output before it can mutate Substrate state. It also validates inbound inter-azolla queries.
 - **Diazotrophs** are stateless workers external to the azolla. They operate across the deployment's trust boundary — currently by invoking external LLM provider APIs.
+
+## Azolla types
+
+The protocol defines two categories of azolla (see `docs/04_taxonomy/azolla_taxonomy.md`):
+
+- **Execution azollas** produce concrete deliverables (e.g., code patches). They use `objective_type: TICKET`.
+- **Memory-support azollas** maintain and surface state for the operator (e.g., orientation manifests, triage candidates). They use `objective_type: STANDING`.
+
+Multiple azollas can operate concurrently. Each owns its own Substrate. Cross-azolla reads go through the target azolla's Exchange Membrane via a typed query interface (see `docs/04_taxonomy/inter_azolla_protocol.md`).
 
 ## One execution cycle
 
-A concrete example: fixing a bug in a CLI tool.
+A concrete example: fixing a bug in a CLI tool using a code patch azolla.
 
-**1. Ticket** — the operator creates a single objective:
+**1. Objective** — the operator creates a single objective:
 ```json
 {
-  "ticket_id": "tk-0042",
+  "objective_id": "obj-0042",
   "azolla_id": "az-main",
   "title": "Fix --verbose flag being ignored in cli parse module",
   "acceptance_criteria": "cli parse respects --verbose; existing tests pass; one new test covers the flag",
-  "repo_ref": "github.com/example/cli-tool",
-  "base_branch": "main",
+  "objective_type": "TICKET",
   "status": "NEW",
+  "importance": 2,
+  "urgency": 1,
   "blocked_reason": null,
   "blocked_on": [],
+  "metadata": {
+    "repo_ref": "github.com/example/cli-tool",
+    "base_branch": "main"
+  },
   "created_at": "2025-06-01T10:00:00Z",
   "updated_at": "2025-06-01T10:00:00Z"
 }
@@ -75,7 +89,7 @@ A concrete example: fixing a bug in a CLI tool.
 ```json
 {
   "snapshot_id": "snap-0042-1",
-  "ticket_id": "tk-0042",
+  "objective_id": "obj-0042",
   "repo_commit_sha": "a1b2c3d",
   "related_yield_refs": [],
   "full_prompt_text": "Fix the --verbose flag in src/cli/parse.rs. The flag is accepted by the argument parser but never propagated to the logger configuration. Acceptance criteria: cli parse respects --verbose; existing tests pass; one new test covers the flag.",
@@ -87,10 +101,10 @@ A concrete example: fixing a bug in a CLI tool.
 ```json
 {
   "work_order_id": "wo-0042-1",
-  "ticket_id": "tk-0042",
+  "objective_id": "obj-0042",
   "diazotroph_type": "PATCH_DIAZOTROPH",
   "context_snapshot_id": "snap-0042-1",
-  "branch_name": "azolla/tk-0042",
+  "branch_name": "azolla/obj-0042",
   "budget_ms": 120000,
   "status": "CREATED",
   "created_at": "2025-06-01T10:05:01Z"
@@ -101,11 +115,14 @@ A concrete example: fixing a bug in a CLI tool.
 ```json
 {
   "output_id": "out-0042-1",
-  "ticket_id": "tk-0042",
-  "branch_name": "azolla/tk-0042",
-  "git_patch": "diff --git a/src/cli/parse.rs b/src/cli/parse.rs\n...",
+  "objective_id": "obj-0042",
+  "title": "Fix --verbose flag propagation in parse_args",
+  "metadata": {
+    "branch_name": "azolla/obj-0042",
+    "pr_description_draft": "Fixes #42: --verbose flag was not propagated from parse_args to the logger config."
+  },
+  "content": "diff --git a/src/cli/parse.rs b/src/cli/parse.rs\n...",
   "notes": "Added verbose flag propagation in parse_args; new test in tests/cli_parse_test.rs.",
-  "pr_description_draft": "Fixes #42: --verbose flag was not propagated from parse_args to the logger config.",
   "created_at": "2025-06-01T10:06:30Z"
 }
 ```
@@ -115,7 +132,7 @@ A concrete example: fixing a bug in a CLI tool.
 {
   "run_id": "run-0042-1",
   "work_order_id": "wo-0042-1",
-  "ticket_id": "tk-0042",
+  "objective_id": "obj-0042",
   "output_id": "out-0042-1",
   "gate_result": "PASS",
   "gate_reason": "patch applies cleanly; acceptance criteria met",
@@ -127,9 +144,10 @@ A concrete example: fixing a bug in a CLI tool.
 **7. Pause** — the system writes a pause state with prioritized next actions and stops:
 ```json
 {
-  "ticket_id": "tk-0042",
+  "objective_id": "obj-0042",
+  "azolla_id": "az-main",
   "reason": "RUN_COMPLETE",
-  "prioritized_actions": ["Review PR on azolla/tk-0042", "Confirm completion"],
+  "prioritized_actions": ["Review PR on azolla/obj-0042", "Confirm completion"],
   "created_at": "2025-06-01T10:06:36Z"
 }
 ```
@@ -157,14 +175,21 @@ The protocol is optimized for:
 
 ## Repository contents
 
-This repository defines specification artifacts and protocol blueprints. It does not yet include a production runtime implementation.
+This repository defines specification artifacts, protocol blueprints, and component libraries. It does not yet include a production runtime implementation.
 
-- `docs/01_charter.md` — protocol purpose, invariants, non-goals, and guardrails
 - `docs/00_glossary.md` — canonical terms and concise definitions
+- `docs/01_charter.md` — protocol purpose, invariants, non-goals, and guardrails
 - `docs/02_mec/mec_v0_1.md` — MEC v0.1 scope, artifacts, lifecycle, and acceptance criteria
-- `docs/02_mec/schemas/*.schema.json` — normative artifact schemas
-- `docs/02_mec/flows/*.pseudo.md` — deterministic control loop and runner flow pseudocode
+- `docs/02_mec/schemas/*.schema.json` — normative artifact schemas (shared across azolla types)
+- `docs/02_mec/flows/*.pseudo.md` — v0.1 deterministic control loop and runner flow pseudocode
 - `docs/03_style/language_constraints.md` — terminology and no-anthropomorphism constraints
+- `docs/04_taxonomy/azolla_taxonomy.md` — azolla categories and type blueprints
+- `docs/04_taxonomy/inter_azolla_protocol.md` — cross-azolla query interface
+- `docs/04_taxonomy/*.schema.json` — inter-azolla query schemas
+- `docs/05_task_mgmt_azolla/task_mgmt_v0_2.md` — task management azolla blueprint (v0.2)
+- `docs/05_task_mgmt_azolla/flows/*.pseudo.md` — task management flow pseudocode
+- `docs/06_libraries/workers/*.md` — reusable polling worker definitions
+- `docs/06_libraries/diazotroph_types/*.md` — diazotroph type definitions
 
 ## Contributing
 
@@ -172,5 +197,5 @@ When updating docs:
 
 1. Keep terminology aligned with `docs/00_glossary.md`.
 2. Preserve charter invariants in `docs/01_charter.md`.
-3. Keep MEC artifacts aligned with schemas in `docs/02_mec/schemas/`.
+3. Keep artifacts aligned with schemas in `docs/02_mec/schemas/`.
 4. Follow language constraints in `docs/03_style/language_constraints.md`.

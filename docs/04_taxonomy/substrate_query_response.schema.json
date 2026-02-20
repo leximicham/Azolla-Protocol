@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "substrate_query_response",
+  "description": "A read-only response from a target azolla Exchange Membrane to a substrate query.",
+  "type": "object",
+  "required": [
+    "response_id",
+    "query_id",
+    "target_azolla_id",
+    "status",
+    "results",
+    "created_at"
+  ],
+  "properties": {
+    "response_id": {"type": "string"},
+    "query_id": {"type": "string"},
+    "target_azolla_id": {"type": "string"},
+    "status": {
+      "type": "string",
+      "enum": ["OK", "DENIED", "TARGET_UNAVAILABLE"]
+    },
+    "results": {
+      "type": "array",
+      "items": {"type": "object"},
+      "description": "Array of matching artifacts. Empty if status is not OK."
+    },
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

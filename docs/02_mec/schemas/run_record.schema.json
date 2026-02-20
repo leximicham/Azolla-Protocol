@@ -6,7 +6,7 @@
   "required": [
     "run_id",
     "work_order_id",
-    "ticket_id",
+    "objective_id",
     "output_id",
     "gate_result",
     "gate_reason",
@@ -16,7 +16,7 @@
   "properties": {
     "run_id": {"type": "string"},
     "work_order_id": {"type": "string"},
-    "ticket_id": {"type": "string"},
+    "objective_id": {"type": "string"},
     "output_id": {"type": "string"},
     "gate_result": {"type": "string", "enum": ["PASS", "FAIL"]},
     "gate_reason": {"type": "string"},
