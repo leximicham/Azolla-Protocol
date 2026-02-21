@@ -26,8 +26,8 @@ The substrate query interface is a typed request/response contract for cross-azo
 
 ### 3.2 Schemas
 
-- `docs/specs/core_protocol/substrate_query.schema.json`
-- `docs/specs/core_protocol/substrate_query_response.schema.json`
+- `docs/specs/core_protocol/schemas/transport/substrate_query.schema.json`
+- `docs/specs/core_protocol/schemas/transport/substrate_query_response.schema.json`
 
 ## 4. Exchange Membrane Query Validation
 

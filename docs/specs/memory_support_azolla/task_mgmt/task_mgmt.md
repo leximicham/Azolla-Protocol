@@ -53,7 +53,7 @@ The task management azolla uses `objective_type: STANDING` with a single persist
 
 ## 4. Artifact Contracts
 
-Shared schemas (from `docs/specs/core_protocol/schemas/`):
+Shared schemas (from `docs/specs/core_protocol/schemas/domain/`):
 
 - `objective.schema.json`
 - `capture_buffer.schema.json`
@@ -109,7 +109,7 @@ Track C is control-plane logic (not a diazotroph execution) and does not count t
 
 ## 6. Worker Topology
 
-Six polling workers, using the claim/lease protocol from `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers.pseudo.md`:
+Six polling workers, using the claim/lease protocol from `docs/specs/core_protocol/polling_workers.pseudo.md`:
 
 1. **Capture Readiness Worker** — `docs/libraries/workers/capture_readiness_worker.md`
 2. **Scheduler Worker** — `docs/libraries/workers/scheduler_worker.md`
@@ -118,7 +118,7 @@ Six polling workers, using the claim/lease protocol from `docs/specs/execution_a
 5. **Manifest Scheduler Worker** — `docs/libraries/workers/manifest_scheduler_worker.md`
 6. **Deadline Monitor Worker** — `docs/libraries/workers/deadline_monitor_worker.md`
 
-Idempotency rules from `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers.pseudo.md` apply to all workers.
+Idempotency rules from `docs/specs/core_protocol/polling_workers.pseudo.md` apply to all workers.
 
 ## 7. Diazotroph Types
 

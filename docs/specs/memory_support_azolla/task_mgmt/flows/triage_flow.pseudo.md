@@ -9,6 +9,10 @@ Convert pending `capture_buffer` artifacts into structured candidate objectives 
 - One or more `capture_buffer` artifacts exist with `status: PENDING`.
 - A `CAPTURE_READY` event has been emitted and is unprocessed.
 
+## Claim/Lease Protocol
+
+Claim/lease protocol details are defined in `docs/specs/core_protocol/polling_workers.pseudo.md` and are normative for this flow.
+
 ## Flow
 
 ```

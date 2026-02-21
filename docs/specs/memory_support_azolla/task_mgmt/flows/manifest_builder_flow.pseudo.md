@@ -9,6 +9,10 @@ Produce an orientation manifest from aggregated cross-azolla state for operator 
 - A `MANIFEST_REQUESTED` event has been emitted and is unprocessed.
 - At least one other azolla is registered and reachable via the inter-azolla query interface.
 
+## Claim/Lease Protocol
+
+Claim/lease protocol details are defined in `docs/specs/core_protocol/polling_workers.pseudo.md` and are normative for this flow.
+
 ## Flow
 
 ```

@@ -186,13 +186,16 @@ This repository defines specification artifacts, protocol blueprints, and compon
 - `docs/specs/core_protocol/` — core protocol, shared schemas, and inter-azolla interface
   - `azolla_taxonomy.md` — azolla categories and type blueprints
   - `inter_azolla_protocol.md` — cross-azolla query interface
-  - `schemas/*.schema.json` — shared artifact schemas (objective, workorder, etc.)
+  - `polling_workers.pseudo.md` — shared worker polling model and claim/lease protocol
+  - `schemas/domain/*.schema.json` — intra-azolla domain artifact schemas (objective, workorder, etc.)
+  - `schemas/transport/*.schema.json` — inter-azolla transport schemas (substrate_query, substrate_query_response)
 - `docs/specs/execution_azolla/patch_diazotroph/` — PATCH_DIAZOTROPH minimal executable core
   - `patch.md` — patch diazotroph scope, artifacts, lifecycle, and acceptance criteria
-  - `flows/*.pseudo.md` — deterministic control loop and worker topology pseudocode
+  - `flows/patch_execution_flow.pseudo.md` — end-to-end execution track flow
+  - `flows/patch_polling_workers.pseudo.md` — local worker topology
 - `docs/specs/memory_support_azolla/task_mgmt/` — task management azolla specification
   - `task_mgmt.md` — task management azolla blueprint
-  - `flows/*.pseudo.md` — task management worker topology and flow pseudocode
+  - `flows/*.pseudo.md` — track flows (triage, manifest, deadline) and local worker topology
 - `docs/style/language_constraints.md` — terminology and no-anthropomorphism constraints
 - `docs/libraries/workers/*.md` — reusable polling worker definitions
 - `docs/libraries/diazotroph_types/*.md` — diazotroph type definitions
@@ -203,5 +206,5 @@ When updating docs:
 
 1. Keep terminology aligned with `docs/glossary.md`.
 2. Preserve charter invariants in `docs/charter.md`.
-3. Keep artifacts aligned with schemas in `docs/specs/core_protocol/schemas/`.
+3. Keep artifacts aligned with schemas in `docs/specs/core_protocol/schemas/domain/` and `docs/specs/core_protocol/schemas/transport/`.
 4. Follow language constraints in `docs/style/language_constraints.md`.

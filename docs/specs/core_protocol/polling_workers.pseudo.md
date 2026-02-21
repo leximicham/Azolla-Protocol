@@ -1,45 +1,53 @@
-# Polling Workers Topology (v0.1)
+# Polling Workers Topology
 
 ## Intent
 
-Make worker ownership explicit for MEC v0.1 so objective lifecycle transitions are deterministic under interval polling.
+Define the generic worker polling model and claim/lease protocol so objective lifecycle transitions are deterministic under interval polling. All azolla types use this model.
 
-## Workers
+## Worker Roles
+
+The standard polling topology comprises four worker roles. Each azolla type selects and configures these roles in its local topology file.
 
 1. **Readiness Worker**
-   - Input: `objective`
+   - Input: `objective` artifacts
    - Responsibility:
-     - enforce `NEW` vs `TODO` semantics,
-     - require human validation before `NEW -> TODO`,
-     - emit `TICKET_READY` for executable `TODO` objectives.
+     - enforce status transition semantics,
+     - emit a readiness event for executable objectives,
+     - avoid duplicate emissions for the same objective state transition.
+   - Library definition: `docs/libraries/workers/readiness_worker.md`
 
 2. **Scheduler Worker**
-   - Input: unprocessed `TICKET_READY` events
+   - Input: unprocessed readiness events
    - Responsibility:
      - claim one event,
      - create `context_snapshot` + `workorder`,
      - set objective to `IN_PROGRESS`,
      - mark event `processed=true` with terminal reason.
+   - Library definition: `docs/libraries/workers/scheduler_worker.md`
 
 3. **Runner Worker**
    - Input: `workorder.status=CREATED`
    - Responsibility:
      - claim one workorder,
-     - execute diazotroph,
+     - dispatch to the diazotroph type specified in `workorder.diazotroph_type`,
      - persist `output_bundle`,
      - set workorder to `EXECUTED`.
+   - Library definition: `docs/libraries/workers/runner_worker.md`
 
 4. **Gate Worker**
-   - Input: executed workorder + output
+   - Input: executed workorder + `output_bundle`
    - Responsibility:
      - evaluate gates,
      - persist `run_record`,
-     - move objective to `DONE` or `BLOCKED|TODO`,
+     - transition objective status,
      - emit terminal `pause_state`.
+   - Library definition: `docs/libraries/workers/gate_worker.md`
 
-## Claim/Lease Protocol (Normative v0.1 Behavior)
+Azolla types may define additional workers (e.g., Capture Readiness Worker, Manifest Scheduler Worker, Deadline Monitor Worker) in their local topology files.
 
-v0.1 workers maintain claim metadata in implementation storage (for example, a lock table keyed by `event_id` or `work_order_id`) and must validate each record against `docs/specs/core_protocol/schemas/claim_record.schema.json`.
+## Claim/Lease Protocol (Normative)
+
+Workers maintain claim metadata in implementation storage (for example, a lock table keyed by `event_id` or `work_order_id`) and must validate each record against `docs/specs/core_protocol/schemas/domain/claim_record.schema.json`.
 
 ### Required claim fields
 
@@ -74,7 +82,7 @@ For both event and workorder claims, store at least (as specified by `claim_reco
 - Worker releases claim after durable write success.
 - If worker crashes, lease expiry enables takeover by another worker.
 
-## Idempotency Rules (Normative v0.1 Behavior)
+## Idempotency Rules (Normative)
 
 - Reprocessing an already processed event must be a no-op.
 - Re-running scheduler for the same event must not create duplicate workorders.
@@ -87,7 +95,7 @@ For both event and workorder claims, store at least (as specified by `claim_reco
 - Each worker must be idempotent for retries after partial failures.
 - Poll interval is implementation-defined; correctness does not depend on exact interval values.
 
-## v0.1 Human-in-the-Loop Boundary
+## Human-in-the-Loop Boundary
 
-- Human performs requirement validation and approval (`NEW -> TODO`).
-- Autonomous review diazotroph can replace this boundary in a later version without changing downstream scheduler/runner/gate responsibilities.
+- Human performs requirement validation and approval (e.g., `NEW -> TODO`).
+- Autonomous diazotroph-based review can replace this boundary in a later version without changing downstream scheduler/runner/gate responsibilities.

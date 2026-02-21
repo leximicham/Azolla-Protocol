@@ -34,15 +34,15 @@ Out of scope in v0.1:
 
 Normative schemas:
 
-- `docs/specs/core_protocol/schemas/objective.schema.json`
-- `docs/specs/core_protocol/schemas/blocker_ref.schema.json`
-- `docs/specs/core_protocol/schemas/context_snapshot.schema.json`
-- `docs/specs/core_protocol/schemas/workorder.schema.json`
-- `docs/specs/core_protocol/schemas/output_bundle.schema.json`
-- `docs/specs/core_protocol/schemas/run_record.schema.json`
-- `docs/specs/core_protocol/schemas/event.schema.json`
-- `docs/specs/core_protocol/schemas/pause_state.schema.json`
-- `docs/specs/core_protocol/schemas/claim_record.schema.json`
+- `docs/specs/core_protocol/schemas/domain/objective.schema.json`
+- `docs/specs/core_protocol/schemas/domain/blocker_ref.schema.json`
+- `docs/specs/core_protocol/schemas/domain/context_snapshot.schema.json`
+- `docs/specs/core_protocol/schemas/domain/workorder.schema.json`
+- `docs/specs/core_protocol/schemas/domain/output_bundle.schema.json`
+- `docs/specs/core_protocol/schemas/domain/run_record.schema.json`
+- `docs/specs/core_protocol/schemas/domain/event.schema.json`
+- `docs/specs/core_protocol/schemas/domain/pause_state.schema.json`
+- `docs/specs/core_protocol/schemas/domain/claim_record.schema.json`
 
 Schema constraints are authoritative if prose and examples diverge.
 
@@ -95,11 +95,11 @@ See `docs/specs/execution_azolla/patch_diazotroph/patch_state_machine.puml`.
 
 v0.1 lifecycle orchestration is implemented by interval-based ACP workers with explicit ownership boundaries.
 
-Polling worker topology:
+Polling worker topology and flows:
 
-- `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers.pseudo.md`
-- `docs/specs/execution_azolla/patch_diazotroph/flows/control_plane_flow.pseudo.md`
-- `docs/specs/execution_azolla/patch_diazotroph/flows/diazotroph_runner_flow.pseudo.md`
+- `docs/specs/core_protocol/polling_workers.pseudo.md` — shared worker model and claim/lease protocol
+- `docs/specs/execution_azolla/patch_diazotroph/flows/patch_polling_workers.pseudo.md` — local worker topology
+- `docs/specs/execution_azolla/patch_diazotroph/flows/patch_execution_flow.pseudo.md` — end-to-end execution track flow
 
 ### 4.8 Claim/Lease Semantics
 
@@ -110,7 +110,7 @@ v0.1 polling workers must use bounded leases with expiry + heartbeat for event/w
 - Ownership loss (lease renewal failure) requires safe abort without further shared-state writes.
 - Idempotent retry is required after takeover/recovery.
 
-Normative protocol details: `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers.pseudo.md`.
+Normative protocol details: `docs/specs/core_protocol/polling_workers.pseudo.md`.
 
 ## 5. Determinism Requirements
 

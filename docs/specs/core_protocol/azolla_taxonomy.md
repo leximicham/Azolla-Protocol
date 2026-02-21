@@ -33,7 +33,7 @@ All azollas, regardless of category, share:
 - **Stateless diazotrophs** operating across the azolla's trust boundary (Charter Section 3.2).
 - **Immutable historical artifacts** (Charter Section 3.5).
 - **Gated execution** with explicit pause semantics (Charter Section 3.6).
-- **Common schemas** from `docs/specs/core_protocol/schemas/`.
+- **Common schemas** from `docs/specs/core_protocol/schemas/domain/` and `docs/specs/core_protocol/schemas/transport/`.
 - **Workers** selected from `docs/libraries/workers/`.
 - **Diazotroph types** selected from `docs/libraries/diazotroph_types/`.
 

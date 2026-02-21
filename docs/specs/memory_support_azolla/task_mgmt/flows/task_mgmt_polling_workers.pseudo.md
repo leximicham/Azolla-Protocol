@@ -48,9 +48,9 @@ Define the worker topology for the task management azolla, referencing shared wo
 
 ## Claim/Lease Protocol
 
-All workers (except the Deadline Monitor Worker) use the claim/lease protocol defined in `docs/specs/execution_azolla/patch_diazotroph/flows/polling_workers.pseudo.md`.
+All workers (except the Deadline Monitor Worker) use the claim/lease protocol defined in `docs/specs/core_protocol/polling_workers.pseudo.md`.
 
-Required claim fields are specified by `docs/specs/core_protocol/schemas/claim_record.schema.json`.
+Required claim fields are specified by `docs/specs/core_protocol/schemas/domain/claim_record.schema.json`.
 
 ## Track Serialization
 
