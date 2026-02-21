@@ -1,6 +1,18 @@
-# Azolla Protocol
+# The Azolla Protocol
 
 **License:** [CC-BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) — Open source for non-commercial use. Attribution required. See [LICENSE](LICENSE) file for details.
+
+## Contents
+
+- [Why this exists](#why-this-exists)
+- [How it works](#how-it-works)
+- [Azolla types](#azolla-types)
+- [One execution cycle](#one-execution-cycle)
+- [Naming](#naming)
+- [Design center](#design-center)
+- [Reading guide](#reading-guide)
+- [Repository contents](#repository-contents)
+- [Contributing](#contributing)
 
 ## Why this exists
 
