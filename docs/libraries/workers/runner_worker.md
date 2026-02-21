@@ -44,6 +44,10 @@
 ## Used By
 - All azolla types.
 
+## Diagram
+
+See `docs/diagrams/runner_worker.puml`.
+
 ## Claim/Lease
 - Uses the claim/lease protocol defined in `docs/specs/core_protocol/polling_workers.pseudo.md`.
 - Long-running executions must renew the lease periodically.

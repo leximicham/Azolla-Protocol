@@ -1,0 +1,21 @@
+@startuml capture_readiness_worker
+' Capture Readiness Worker — state machine derived from capture_readiness_worker.md Flow.
+
+hide empty description
+
+state "capture_buffer.status = PENDING\n---\ncapture_buffer polled from Substrate" as CaptureBufferPending
+
+state "duplicate check\n---\nexisting unprocessed CAPTURE_READY\nevent queried" as DuplicateCheck
+
+state "duplicate exists\n---\nevent emission skipped" as DuplicateExists
+
+state "CAPTURE_READY event emitted\n---\nevent.type = CAPTURE_READY\nevent.processed = false" as CaptureReadyEmitted
+
+[*] --> CaptureBufferPending : poll pending capture_buffers
+CaptureBufferPending --> DuplicateCheck : check for existing event
+DuplicateCheck --> DuplicateExists : unprocessed event exists
+DuplicateCheck --> CaptureReadyEmitted : emit CAPTURE_READY
+DuplicateExists --> [*]
+CaptureReadyEmitted --> [*]
+
+@enduml

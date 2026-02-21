@@ -29,5 +29,9 @@
 ## Used By
 - All azolla types.
 
+## Diagram
+
+See `docs/diagrams/readiness_worker.puml`.
+
 ## Notes
 - Autonomous diazotroph-based review may replace the human promotion step in a later version without changing downstream scheduler/runner/gate responsibilities.

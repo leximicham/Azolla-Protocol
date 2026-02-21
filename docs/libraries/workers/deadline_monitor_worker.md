@@ -8,6 +8,36 @@
 - Write local `pause_state` for overdue items with recommended operator actions.
 - No cross-azolla writes. The operator acts manually to create blockers or update objectives in target azollas.
 
+## Flow
+
+```
+1. Poll objectives from the local Substrate.
+   - Read all objectives with status not DONE.
+
+2. For each objective:
+   - Look up urgency value.
+   - Apply deployment urgency-to-deadline mapping.
+   - If urgency = 4 (no fixed deadline), skip.
+   - Calculate deadline based on objective.updated_at + mapped duration.
+
+3. For each objective where the calculated deadline is exceeded:
+   - Write pause_state:
+     - objective_id: the overdue objective's identifier
+     - azolla_id: local azolla identifier
+     - reason: RUN_COMPLETE
+     - prioritized_actions: e.g.,
+       ["Review overdue objective <objective_id> (urgency <N>)",
+        "Update objective urgency or address the item"]
+
+4. No cross-azolla writes. If the overdue objective belongs to
+   another azolla (discovered via cross-azolla query), the
+   pause_state is still written locally.
+```
+
+## Diagram
+
+See `docs/diagrams/deadline_monitor_worker.puml`.
+
 ## Used By
 - Task management azolla (available to all azolla types).
 

@@ -45,7 +45,7 @@ This file documents language constraints for Azolla Protocol documentation and a
 
 ## PR Checklist (Language Constraints)
 
-- Use schema names and canonical terminology from this file and `00_glossary.md`.
+- Use schema names and canonical terminology from this file and `docs/glossary.md`.
 - Replace anthropomorphic verbs with operational descriptions.
 - Ensure statements of responsibility clearly indicate human actors or control-plane actors.
 - Allow title/sentence-case capitalization where appropriate; do not treat capitalization alone as a violation.

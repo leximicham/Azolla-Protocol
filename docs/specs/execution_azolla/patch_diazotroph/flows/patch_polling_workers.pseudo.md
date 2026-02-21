@@ -30,7 +30,7 @@ Define the worker topology for the code patch azolla, referencing shared workers
 
 - Library definition: `docs/libraries/workers/gate_worker.md`
 - Input: executed workorder + output_bundle
-- Responsibility: evaluate gates, extract `commit_sha` from output_bundle metadata, write `run_record`, transition objective status, emit terminal `pause_state`
+- Responsibility: evaluate gates, write `run_record`, transition objective status, emit terminal `pause_state`
 
 ## Claim/Lease Protocol
 

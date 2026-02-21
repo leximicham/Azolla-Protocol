@@ -120,6 +120,14 @@ Six polling workers, using the claim/lease protocol from `docs/specs/core_protoc
 
 Idempotency rules from `docs/specs/core_protocol/polling_workers.pseudo.md` apply to all workers.
 
+Polling worker topology and flows:
+
+- `docs/specs/core_protocol/polling_workers.pseudo.md` — shared worker model and claim/lease protocol
+- `docs/specs/memory_support_azolla/task_mgmt/flows/task_mgmt_polling_workers.pseudo.md` — local worker topology
+- `docs/specs/memory_support_azolla/task_mgmt/flows/triage_flow.pseudo.md` — Track A (triage) flow
+- `docs/specs/memory_support_azolla/task_mgmt/flows/manifest_builder_flow.pseudo.md` — Track B (manifest build) flow
+- `docs/specs/memory_support_azolla/task_mgmt/flows/deadline_monitor_flow.pseudo.md` — Track C (deadline monitoring) flow
+
 ## 7. Diazotroph Types
 
 Two diazotroph types, statically defined:
@@ -157,6 +165,8 @@ The task management azolla specification is complete when the implementation can
 6. Emission of `pause_state` with bounded prioritized actions after each work cycle.
 7. Rehydration of work context from persisted artifacts without external memory.
 
-## 11. UML State Machine
+## 11. UML State Machines
 
-See `docs/specs/task_mgmt/task_mgmt_state_machine.puml`.
+- `docs/diagrams/triage_track.puml` — Track A (triage) lifecycle
+- `docs/diagrams/manifest_build_track.puml` — Track B (manifest build) lifecycle
+- `docs/diagrams/deadline_monitor_track.puml` — Track C (deadline monitoring) lifecycle

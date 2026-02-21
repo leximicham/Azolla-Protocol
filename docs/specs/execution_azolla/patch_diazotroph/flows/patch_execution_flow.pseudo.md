@@ -91,12 +91,10 @@ Claim/lease protocol details are defined in `docs/specs/core_protocol/polling_wo
 11. Gate Worker evaluates output:
     - Validate output_bundle against schema.
     - Check that content contains a non-empty patch (when runner status is not BUDGET_EXHAUSTED).
-    - Extract commit_sha from output_bundle.metadata if present.
 
 12. Gate Worker writes run_record:
     - gate_result: PASS or FAIL
     - gate_reason: validation result description
-    - commit_sha: from output_bundle.metadata (if present)
 
 13. On PASS:
     - Transition objective status to DONE.

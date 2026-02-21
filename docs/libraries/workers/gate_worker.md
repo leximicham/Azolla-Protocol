@@ -5,8 +5,7 @@
 
 ## Responsibility
 - Evaluate output against Exchange Membrane gate criteria.
-- Extract `commit_sha` from `output_bundle.metadata` if present (for diazotrophs that produce repository state such as `PATCH_DIAZOTROPH`).
-- Persist `run_record` with gate decision (`PASS` or `FAIL`), reason, and optional `commit_sha`.
+- Persist `run_record` with gate decision (`PASS` or `FAIL`) and reason.
 - On `PASS`: transition objective status toward `DONE`.
 - On `FAIL`: transition objective status toward `BLOCKED` or `TODO`.
 - Emit terminal `pause_state` with 1-3 prioritized actions.
@@ -26,12 +25,10 @@
 4. Validate output_bundle against schema.
 
 5. Evaluate gate criteria (azolla-type-specific).
-   - Extract metadata fields (e.g., commit_sha) if present.
 
 6. Write run_record:
    - gate_result: PASS or FAIL
    - gate_reason: validation result description
-   - Optional metadata (e.g., commit_sha)
 
 7. On PASS: transition objective status toward DONE.
 
@@ -44,6 +41,10 @@
 
 ## Used By
 - All azolla types.
+
+## Diagram
+
+See `docs/diagrams/gate_worker.puml`.
 
 ## Claim/Lease
 - Uses the claim/lease protocol defined in `docs/specs/core_protocol/polling_workers.pseudo.md`.

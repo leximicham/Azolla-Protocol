@@ -89,9 +89,17 @@ v0.1 readiness handoff:
 
 ### 4.6 UML State Machine
 
-See `docs/specs/execution_azolla/patch_diazotroph/patch_state_machine.puml`.
+See `docs/diagrams/patch_execution_track.puml`.
 
-### 4.7 Polling Worker Topology
+### 4.7 Diazotroph Type
+
+One diazotroph type, statically defined:
+
+1. **PATCH_DIAZOTROPH** — `docs/libraries/diazotroph_types/patch_diazotroph.md`
+
+Stateless. All input arrives through `context_snapshot`.
+
+### 4.8 Polling Worker Topology
 
 v0.1 lifecycle orchestration is implemented by interval-based ACP workers with explicit ownership boundaries.
 
@@ -101,7 +109,7 @@ Polling worker topology and flows:
 - `docs/specs/execution_azolla/patch_diazotroph/flows/patch_polling_workers.pseudo.md` — local worker topology
 - `docs/specs/execution_azolla/patch_diazotroph/flows/patch_execution_flow.pseudo.md` — end-to-end execution track flow
 
-### 4.8 Claim/Lease Semantics
+### 4.9 Claim/Lease Semantics
 
 v0.1 polling workers must use bounded leases with expiry + heartbeat for event/workorder ownership.
 

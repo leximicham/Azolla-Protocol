@@ -1,0 +1,31 @@
+@startuml manifest_scheduler_worker
+' Manifest Scheduler Worker — state machine derived from manifest_scheduler_worker.md Flow.
+
+hide empty description
+
+state "event unprocessed\n---\nevent.type = MANIFEST_REQUESTED\nevent.processed = false" as EventUnprocessed
+
+state "event claimed\n---\nclaim acquired on event" as EventClaimed
+
+state "claim failed\n---\nskip, continue polling" as ClaimFailed
+
+state "cross-azolla queries issued\n---\nsubstrate_query submitted\nto each registered azolla\nresponses aggregated" as QueriesIssued
+
+state "local state read\n---\npending capture_buffer count\nobjective urgency data" as LocalStateRead
+
+state "context_snapshot built\n---\naggregated data serialized\ncontext_snapshot persisted" as ContextSnapshotBuilt
+
+state "workorder created\n---\nworkorder.status = CREATED\ndiazotroph_type = MANIFEST_BUILDER_DIAZOTROPH\nevent.processed = true\nreason: SCHEDULED" as WorkorderCreated
+
+[*] --> EventUnprocessed : pick oldest unprocessed event
+EventUnprocessed --> EventClaimed : acquire claim
+EventUnprocessed --> ClaimFailed : claim acquisition fails
+ClaimFailed --> [*]
+
+EventClaimed --> QueriesIssued : issue substrate_query per azolla
+QueriesIssued --> LocalStateRead : read local capture + urgency data
+LocalStateRead --> ContextSnapshotBuilt : build context_snapshot
+ContextSnapshotBuilt --> WorkorderCreated : create workorder
+WorkorderCreated --> [*] : release claim
+
+@enduml

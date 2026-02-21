@@ -1,0 +1,52 @@
+@startuml triage_track
+' Triage Track — end-to-end lifecycle derived from
+' triage_flow.pseudo.md.
+
+hide empty description
+
+state "capture_buffer.status = PENDING\n---\noperator creates capture_buffer" as CaptureCreated
+
+state "event.type = CAPTURE_READY\n---\nevent.processed = false" as CaptureReadyEmitted
+
+state "event.processed = true\n---\nreason: NO_PENDING_CAPTURES\nno PENDING capture_buffers found" as NoPendingCaptures
+
+state "workorder.status = CREATED\n---\ncontext_snapshot persisted\ndiazotroph_type = TRIAGE_DIAZOTROPH\nevent.processed = true\nreason: SCHEDULED" as TriageScheduled
+
+state "workorder.status = EXECUTED\n---\noutput_bundle persisted\nmetadata: { capture_ids,\n  suggested_target_azolla_type }" as TriageOutputProduced
+
+state "budget expired\n---\noutput_bundle with explanatory notes" as BudgetExpired
+
+state "run_record.gate_result = PASS\n---\ncapture_buffer.status = PROCESSED" as TriageGatePass
+
+state "run_record.gate_result = FAIL" as TriageGateFail
+
+state "pause_state.reason = RUN_COMPLETE\n---\nprioritized_actions:\n  Review triage output,\n  Promote candidate or discard" as PausedTriageComplete
+
+state "pause_state.reason = GATE_FAILED\n---\nprioritized_actions:\n  Review failure, Retry triage" as PausedTriageFailed
+
+state "pause_state.reason = BUDGET_EXHAUSTED\n---\nprioritized_actions:\n  Review partial output, Retry" as PausedTriageBudget
+
+[*] --> CaptureCreated
+CaptureCreated --> CaptureReadyEmitted : emit CAPTURE_READY
+
+CaptureReadyEmitted --> NoPendingCaptures : no PENDING captures found
+CaptureReadyEmitted --> TriageScheduled : schedule triage
+
+NoPendingCaptures --> [*]
+
+TriageScheduled --> TriageOutputProduced : dispatch TRIAGE_DIAZOTROPH
+TriageScheduled --> BudgetExpired : budget_ms exceeded
+
+TriageOutputProduced --> TriageGatePass : gate criteria met
+TriageOutputProduced --> TriageGateFail : gate criteria not met
+
+BudgetExpired --> PausedTriageBudget : write pause_state
+
+TriageGatePass --> PausedTriageComplete : write pause_state
+TriageGateFail --> PausedTriageFailed : write pause_state
+
+PausedTriageComplete --> [*]
+PausedTriageFailed --> [*]
+PausedTriageBudget --> [*]
+
+@enduml
