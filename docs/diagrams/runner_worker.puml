@@ -1,0 +1,39 @@
+@startuml runner_worker
+' Runner Worker — generic state machine derived from runner_worker.md Flow.
+' No azolla-specific references.
+
+hide empty description
+
+state "workorder.status = CREATED\n---\nworkorder eligible for execution" as WorkorderCreated
+
+state "workorder claimed\n---\nclaim acquired on workorder" as WorkorderClaimed
+
+state "claim failed\n---\nskip, continue polling" as ClaimFailed
+
+state "diazotroph dispatched\n---\nexecution in progress\nlease renewed periodically" as DiazotrophDispatched
+
+state "lease renewal failed\n---\nabort without further\nshared-state writes" as LeaseRenewalFailed
+
+state "budget expired\n---\noutput_bundle persisted\nwith explanatory notes" as BudgetExpired
+
+state "output_bundle persisted\n---\nterminal output_bundle written" as OutputPersisted
+
+state "workorder.status = EXECUTED\n---\nworkorder marked executed" as WorkorderExecuted
+
+[*] --> WorkorderCreated : pick oldest eligible workorder
+WorkorderCreated --> WorkorderClaimed : acquire claim
+WorkorderCreated --> ClaimFailed : claim acquisition fails
+ClaimFailed --> [*]
+
+WorkorderClaimed --> DiazotrophDispatched : dispatch to diazotroph_type
+DiazotrophDispatched --> LeaseRenewalFailed : lease renewal fails
+DiazotrophDispatched --> BudgetExpired : budget_ms exceeded
+DiazotrophDispatched --> OutputPersisted : execution completes
+
+LeaseRenewalFailed --> [*]
+
+BudgetExpired --> WorkorderExecuted : set status EXECUTED
+OutputPersisted --> WorkorderExecuted : set status EXECUTED
+WorkorderExecuted --> [*] : release claim
+
+@enduml

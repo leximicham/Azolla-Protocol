@@ -1,0 +1,46 @@
+@startuml manifest_build_track
+' Manifest Build Track — end-to-end lifecycle derived from
+' manifest_builder_flow.pseudo.md.
+
+hide empty description
+
+state "event.type = MANIFEST_REQUESTED\n---\nevent.processed = false\noperator request or periodic trigger" as ManifestRequested
+
+state "cross-azolla queries issued\n---\nsubstrate_query per registered azolla\nresponses aggregated\nDENIED/TARGET_UNAVAILABLE noted" as QueriesIssued
+
+state "workorder.status = CREATED\n---\ncontext_snapshot persisted\n(includes aggregated cross-azolla data)\ndiazotroph_type = MANIFEST_BUILDER_DIAZOTROPH\nevent.processed = true\nreason: SCHEDULED" as ManifestScheduled
+
+state "workorder.status = EXECUTED\n---\noutput_bundle persisted\nmetadata: { queried_azolla_ids }\ncontent: orientation manifest" as ManifestProduced
+
+state "budget expired\n---\noutput_bundle with explanatory notes" as BudgetExpired
+
+state "run_record.gate_result = PASS\n---\nqueried_azolla_ids non-empty\ncontent contains actionable text" as ManifestGatePass
+
+state "run_record.gate_result = FAIL" as ManifestGateFail
+
+state "pause_state.reason = RUN_COMPLETE\n---\nprioritized_actions:\n  derived from manifest orientation\n  (up to 3)" as PausedManifestComplete
+
+state "pause_state.reason = GATE_FAILED\n---\nprioritized_actions:\n  Review failure, Retry manifest" as PausedManifestFailed
+
+state "pause_state.reason = BUDGET_EXHAUSTED\n---\nprioritized_actions:\n  Review partial output, Retry" as PausedManifestBudget
+
+[*] --> ManifestRequested
+ManifestRequested --> QueriesIssued : claim event, issue queries
+QueriesIssued --> ManifestScheduled : build context_snapshot, create workorder
+
+ManifestScheduled --> ManifestProduced : dispatch MANIFEST_BUILDER_DIAZOTROPH
+ManifestScheduled --> BudgetExpired : budget_ms exceeded
+
+ManifestProduced --> ManifestGatePass : gate criteria met
+ManifestProduced --> ManifestGateFail : gate criteria not met
+
+BudgetExpired --> PausedManifestBudget : write pause_state
+
+ManifestGatePass --> PausedManifestComplete : write pause_state
+ManifestGateFail --> PausedManifestFailed : write pause_state
+
+PausedManifestComplete --> [*]
+PausedManifestFailed --> [*]
+PausedManifestBudget --> [*]
+
+@enduml

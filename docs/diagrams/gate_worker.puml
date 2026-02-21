@@ -1,0 +1,34 @@
+@startuml gate_worker
+' Gate Worker — generic state machine derived from gate_worker.md Flow.
+' No azolla-specific references.
+
+hide empty description
+
+state "workorder.status = EXECUTED\n---\nworkorder + output_bundle eligible" as WorkorderExecuted
+
+state "workorder claimed\n---\nclaim acquired on workorder" as WorkorderClaimed
+
+state "claim failed\n---\nskip, continue polling" as ClaimFailed
+
+state "output_bundle validated\n---\nschema validation complete\nmetadata extracted" as OutputValidated
+
+state "gate_result = PASS\n---\nrun_record.gate_result = PASS\nobjective.status toward DONE" as GatePass
+
+state "gate_result = FAIL\n---\nrun_record.gate_result = FAIL\nobjective.status toward BLOCKED|TODO" as GateFail
+
+state "pause_state emitted\n---\npause_state.prioritized_actions = 1..3" as PauseStateEmitted
+
+[*] --> WorkorderExecuted : pick oldest eligible workorder
+WorkorderExecuted --> WorkorderClaimed : acquire claim
+WorkorderExecuted --> ClaimFailed : claim acquisition fails
+ClaimFailed --> [*]
+
+WorkorderClaimed --> OutputValidated : load and validate output_bundle
+OutputValidated --> GatePass : gate criteria met
+OutputValidated --> GateFail : gate criteria not met
+
+GatePass --> PauseStateEmitted : write run_record, transition objective
+GateFail --> PauseStateEmitted : write run_record, transition objective
+PauseStateEmitted --> [*] : release claim
+
+@enduml

@@ -1,0 +1,63 @@
+@startuml patch_execution_track
+' Patch Execution Track — end-to-end lifecycle derived from
+' patch_execution_flow.pseudo.md.
+
+hide empty description
+
+state "objective.status = NEW\n---\nobjective created\nevent = absent" as TicketCreated
+
+state "objective.status = TODO\n---\nhuman validates requirements\nevent = absent" as TicketApproved
+
+state "event.type = TICKET_READY\n---\nevent.processed = false" as ReadyEventEmitted
+
+state "event.processed = true\n---\nreason: MISSING_TICKET\nobjective not found" as MissingTicket
+
+state "event.processed = true\n---\nreason: NON_EXECUTABLE_STATUS\nobjective.status not executable" as NonExecutable
+
+state "event.processed = true\n---\nreason: BLOCKED\nobjective.status = BLOCKED\npause_state written" as Blocked
+
+state "workorder.status = CREATED\n---\nobjective.status = IN_PROGRESS\ncontext_snapshot persisted\ndiazotroph_type = PATCH_DIAZOTROPH\nbranch_name = azolla/<objective_id>" as WorkScheduled
+
+state "workorder.status = EXECUTED\n---\noutput_bundle persisted\nmetadata: { branch_name,\n  pr_description_draft, commit_sha }\ncontent: normalized diff" as ExecutionOutputProduced
+
+state "budget expired\n---\noutput_bundle with empty patch\nand explanatory notes" as BudgetExpired
+
+state "run_record.gate_result = PASS\n---\nobjective.status = DONE" as GatePass
+
+state "run_record.gate_result = FAIL\n---\nobjective.status = BLOCKED|TODO" as GateFail
+
+state "pause_state.reason = RUN_COMPLETE\n---\nprioritized_actions:\n  Review PR, Confirm completion" as PausedRunComplete
+
+state "pause_state.reason = GATE_FAILED\n---\nprioritized_actions:\n  Review failure, Retry" as PausedGateFailed
+
+state "pause_state.reason = BUDGET_EXHAUSTED\n---\nprioritized_actions:\n  Review partial output, Retry" as PausedBudgetExhausted
+
+[*] --> TicketCreated
+TicketCreated --> TicketApproved : human promotes NEW to TODO
+TicketApproved --> ReadyEventEmitted : emit TICKET_READY
+
+ReadyEventEmitted --> MissingTicket : objective not found
+ReadyEventEmitted --> NonExecutable : status not executable
+ReadyEventEmitted --> Blocked : unresolved blockers
+ReadyEventEmitted --> WorkScheduled : schedule execution
+
+MissingTicket --> [*]
+NonExecutable --> [*]
+Blocked --> [*]
+
+WorkScheduled --> ExecutionOutputProduced : dispatch PATCH_DIAZOTROPH
+WorkScheduled --> BudgetExpired : budget_ms exceeded
+
+ExecutionOutputProduced --> GatePass : gate criteria met
+ExecutionOutputProduced --> GateFail : gate criteria not met
+
+BudgetExpired --> PausedBudgetExhausted : write pause_state
+
+GatePass --> PausedRunComplete : write pause_state
+GateFail --> PausedGateFailed : write pause_state
+
+PausedRunComplete --> [*]
+PausedGateFailed --> [*]
+PausedBudgetExhausted --> [*]
+
+@enduml

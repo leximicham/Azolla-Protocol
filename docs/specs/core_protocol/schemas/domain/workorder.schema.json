@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "workorder",
+  "description": "A unit of execution created from an objective.",
+  "type": "object",
+  "required": [
+    "work_order_id",
+    "objective_id",
+    "diazotroph_type",
+    "context_snapshot_id",
+    "branch_name",
+    "budget_ms",
+    "created_at",
+    "status"
+  ],
+  "properties": {
+    "work_order_id": {"type": "string"},
+    "objective_id": {"type": "string"},
+    "diazotroph_type": {
+      "type": "string",
+      "enum": ["PATCH_DIAZOTROPH", "TRIAGE_DIAZOTROPH", "MANIFEST_BUILDER_DIAZOTROPH"]
+    },
+    "context_snapshot_id": {"type": "string"},
+    "branch_name": {"type": ["string", "null"]},
+    "budget_ms": {"type": "integer", "minimum": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "status": {"type": "string", "enum": ["CREATED", "EXECUTED"]}
+  },
+  "additionalProperties": false
+}

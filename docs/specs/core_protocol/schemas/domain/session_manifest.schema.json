@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "session_manifest",
+  "description": "An orientation artifact synthesized from cross-azolla state for operator session resumption. Universal artifact available to any azolla type.",
+  "type": "object",
+  "required": [
+    "manifest_id",
+    "azolla_id",
+    "queried_azolla_ids",
+    "pause_state_summary",
+    "prioritized_orientation",
+    "created_at"
+  ],
+  "properties": {
+    "manifest_id": {"type": "string"},
+    "azolla_id": {"type": "string"},
+    "queried_azolla_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Azolla identifiers whose substrates were queried to build this manifest."
+    },
+    "pause_state_summary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_azolla_id", "objective_id", "reason", "prioritized_actions"],
+        "properties": {
+          "source_azolla_id": {"type": "string"},
+          "objective_id": {"type": "string"},
+          "reason": {"type": "string"},
+          "prioritized_actions": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Per-azolla pause state digests aggregated from cross-azolla queries."
+    },
+    "prioritized_orientation": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "Ordered list of recommended operator actions for session resumption."
+    },
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

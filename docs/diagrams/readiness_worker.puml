@@ -1,0 +1,29 @@
+@startuml readiness_worker
+' Readiness Worker — generic state machine derived from readiness_worker.md Flow.
+' No azolla-specific references.
+
+hide empty description
+
+state "objective eligible\n---\nobjective polled from Substrate" as ObjectiveEligible
+
+state "prerequisites checked\n---\nstatus transition prerequisites\nevaluated" as PrerequisitesChecked
+
+state "prerequisites not met\n---\nobjective skipped" as PrerequisitesNotMet
+
+state "duplicate check\n---\nexisting unprocessed readiness\nevent queried" as DuplicateCheck
+
+state "duplicate exists\n---\nevent emission skipped" as DuplicateExists
+
+state "readiness event emitted\n---\nevent.type = readiness event\nevent.processed = false" as ReadinessEventEmitted
+
+[*] --> ObjectiveEligible : poll objectives
+ObjectiveEligible --> PrerequisitesChecked : evaluate prerequisites
+PrerequisitesChecked --> PrerequisitesNotMet : prerequisites not met
+PrerequisitesChecked --> DuplicateCheck : prerequisites met
+DuplicateCheck --> DuplicateExists : unprocessed event exists
+DuplicateCheck --> ReadinessEventEmitted : emit readiness event
+PrerequisitesNotMet --> [*]
+DuplicateExists --> [*]
+ReadinessEventEmitted --> [*]
+
+@enduml

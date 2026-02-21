@@ -1,0 +1,43 @@
+@startuml scheduler_worker
+' Scheduler Worker — generic state machine derived from scheduler_worker.md Flow.
+' No azolla-specific references.
+
+hide empty description
+
+state "event unprocessed\n---\nevent.processed = false" as EventUnprocessed
+
+state "event claimed\n---\nclaim acquired on event" as EventClaimed
+
+state "claim failed\n---\nskip, continue polling" as ClaimFailed
+
+state "objective validated\n---\nobjective loaded and checked" as ObjectiveValidated
+
+state "objective not found\n---\nevent.processed = true\nreason: MISSING_TICKET" as ObjectiveNotFound
+
+state "objective not executable\n---\nevent.processed = true\nreason: NON_EXECUTABLE_STATUS" as ObjectiveNotExecutable
+
+state "blockers present\n---\npause_state written\nobjective.status = BLOCKED\nevent.processed = true" as BlockersPresent
+
+state "context_snapshot built\n---\ncontext_snapshot persisted (immutable)" as ContextSnapshotBuilt
+
+state "workorder created\n---\nworkorder.status = CREATED\nobjective.status = IN_PROGRESS\nevent.processed = true\nreason: SCHEDULED" as WorkorderCreated
+
+[*] --> EventUnprocessed : pick oldest unprocessed event
+EventUnprocessed --> EventClaimed : acquire claim
+EventUnprocessed --> ClaimFailed : claim acquisition fails
+ClaimFailed --> [*]
+
+EventClaimed --> ObjectiveValidated : load and validate objective
+ObjectiveValidated --> ObjectiveNotFound : objective not found
+ObjectiveValidated --> ObjectiveNotExecutable : status not executable
+ObjectiveValidated --> BlockersPresent : unresolved blockers present
+ObjectiveValidated --> ContextSnapshotBuilt : objective executable
+
+ObjectiveNotFound --> [*] : release claim
+ObjectiveNotExecutable --> [*] : release claim
+BlockersPresent --> [*] : release claim
+
+ContextSnapshotBuilt --> WorkorderCreated : create workorder
+WorkorderCreated --> [*] : release claim
+
+@enduml

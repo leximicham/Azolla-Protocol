@@ -1,0 +1,30 @@
+@startuml deadline_monitor_track
+' Deadline Monitor Track — end-to-end lifecycle derived from
+' deadline_monitor_flow.pseudo.md.
+' Control-plane logic; no workorder or diazotroph execution.
+
+hide empty description
+
+state "objective active\n---\nobjective.status != DONE\nobjective.urgency in 0..4" as ObjectiveActive
+
+state "urgency mapped\n---\nurgency-to-deadline mapping applied\ndeadline calculated from\nobjective.updated_at + mapped duration" as UrgencyMapped
+
+state "no fixed deadline\n---\nurgency = 4\nskipped" as NoFixedDeadline
+
+state "deadline not exceeded\n---\nno action required" as DeadlineNotExceeded
+
+state "deadline exceeded\n---\nobjective overdue" as DeadlineExceeded
+
+state "pause_state written\n---\npause_state.reason = RUN_COMPLETE\nprioritized_actions:\n  Review overdue objective,\n  Update urgency or address item\n(local write only)" as PausedDeadlineOverdue
+
+[*] --> ObjectiveActive : poll objectives
+ObjectiveActive --> UrgencyMapped : apply urgency-to-deadline mapping
+UrgencyMapped --> NoFixedDeadline : urgency = 4
+UrgencyMapped --> DeadlineNotExceeded : deadline not exceeded
+UrgencyMapped --> DeadlineExceeded : deadline exceeded
+NoFixedDeadline --> [*]
+DeadlineNotExceeded --> [*]
+DeadlineExceeded --> PausedDeadlineOverdue : write local pause_state
+PausedDeadlineOverdue --> [*]
+
+@enduml
