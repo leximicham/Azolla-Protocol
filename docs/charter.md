@@ -9,7 +9,7 @@ The Azolla Protocol defines a control-plane architecture for orchestrating state
 - Maintains durable, reconstructable state
 - Prevents autonomy drift and architectural sprawl
 
-The Azolla Protocol is structured to function as a cognitive prosthesis - an externalized executive function designed to sustain long-running code projects when motivation and activation fluctuate.
+The Azolla Protocol is structured to function as a cognitive prosthesis - an externalized executive function designed to sustain long-running projects when motivation and activation fluctuate.
 
 The system is designed for execution under constraint, not simulation of collaboration.
 
@@ -17,7 +17,7 @@ The system is designed for execution under constraint, not simulation of collabo
 
 ## 2. Problem Statement
 
-Executive dysfunction introduces three systemic risks in long-term technical work:
+Executive dysfunction introduces three systemic risks in long-term structured work:
 
 - Loss of momentum after interruption
 - Inability to rehydrate complex project state

@@ -4,7 +4,7 @@
 
 ## Why this exists
 
-Long-running code projects fail in predictable ways: momentum dies after interruption, complex state becomes impossible to reconstruct, and branching decisions compound into overwhelm. These risks intensify when executive function fluctuates.
+Long-running projects fail in predictable ways: momentum dies after interruption, complex state becomes impossible to reconstruct, and branching decisions compound into overwhelm. These risks intensify when executive function fluctuates.
 
 The Azolla Protocol is a cognitive prosthesis — an externalized executive function system that converts structured intent into sustained execution under constraint. It is a blueprint library for constructing azolla deployments: each deployment is composed from shared schemas, reusable workers, and statically-defined diazotroph types, orchestrated through a durable, deterministic control plane that preserves progress across any interruption.
 
@@ -55,14 +55,16 @@ Each deployment (an **azolla**) owns one objective at a time and comprises three
 
 The protocol defines two categories of azolla (see `docs/specs/core_protocol/azolla_taxonomy.md`):
 
-- **Execution azollas** produce concrete deliverables (e.g., code patches). They use `objective_type: TICKET`.
+- **Execution azollas** produce concrete deliverables (e.g., code patches, documents, analyses). They use `objective_type: TICKET`.
 - **Memory-support azollas** maintain and surface state for the operator (e.g., orientation manifests, triage candidates). They use `objective_type: STANDING`.
 
 Multiple azollas can operate concurrently. Each owns its own Substrate. Cross-azolla reads go through the target azolla's Exchange Membrane via a typed query interface (see `docs/specs/core_protocol/inter_azolla_protocol.md`).
 
 ## One execution cycle
 
-A concrete example: fixing a bug in a CLI tool using a code patch azolla.
+The following example walks through a single execution cycle using a code patch azolla — one of many possible azolla types. Other execution azollas could produce documents, analyses, or other deliverables using the same lifecycle.
+
+**Example: fixing a bug in a CLI tool.**
 
 **1. Objective** — the operator creates a single objective:
 ```json
@@ -165,7 +167,7 @@ The operator can return hours or days later and reconstruct exactly where things
 The project borrows from symbiotic biology:
 
 - **Azolla** is a genus of aquatic ferns that host nitrogen-fixing cyanobacteria in their leaf cavities. The fern provides structure and environment; the bacteria provide a specific metabolic capability. Neither functions the same way alone.
-- **Diazotrophs** are the nitrogen-fixing organisms. In the protocol, they are the stateless workers that provide the generative capability (LLM-based code generation) while the azolla provides governance, durability, and control.
+- **Diazotrophs** are the nitrogen-fixing organisms. In the protocol, they are the stateless workers that provide the generative capability (LLM-based generation) while the azolla provides governance, durability, and control.
 - The boundary between fern tissue and cyanobacterial cavity is a biological membrane — hence **Exchange Membrane** for the validation layer between internal state and external execution.
 
 The metaphor reinforces a key architectural principle: the generative capability is contained and governed, not autonomous.
